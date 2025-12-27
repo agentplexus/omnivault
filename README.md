@@ -1,7 +1,10 @@
 # OmniVault
 
-[![Go Reference](https://pkg.go.dev/badge/github.com/agentplexus/omnivault.svg)](https://pkg.go.dev/github.com/agentplexus/omnivault)
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![Build Status][build-status-svg]][build-status-url]
+[![Lint Status][lint-status-svg]][lint-status-url]
+[![Go Report Card][goreport-svg]][goreport-url]
+[![Docs][docs-godoc-svg]][docs-godoc-url]
+[![License][license-svg]][license-url]
 
 OmniVault is a unified Go library for secret management across multiple providers. It provides a single interface for accessing secrets from password managers, cloud secret managers, enterprise vaults, and local storage.
 
@@ -362,3 +365,16 @@ Contributions are welcome! Please submit pull requests or create issues for bugs
 ## License
 
 MIT License - see [LICENSE](LICENSE) for details.
+
+ [build-status-svg]: https://github.com/agentplexus/omnivault/actions/workflows/ci.yaml/badge.svg?branch=main
+ [build-status-url]: https://github.com/agentplexus/omnivault/actions/workflows/ci.yaml
+ [lint-status-svg]: https://github.com/agentplexus/omnivault/actions/workflows/lint.yaml/badge.svg?branch=main
+ [lint-status-url]: https://github.com/agentplexus/omnivault/actions/workflows/lint.yaml
+ [goreport-svg]: https://goreportcard.com/badge/github.com/agentplexus/omnivault
+ [goreport-url]: https://goreportcard.com/report/github.com/agentplexus/omnivault
+ [docs-godoc-svg]: https://pkg.go.dev/badge/github.com/agentplexus/omnivault
+ [docs-godoc-url]: https://pkg.go.dev/github.com/agentplexus/omnivault
+ [license-svg]: https://img.shields.io/badge/license-MIT-blue.svg
+ [license-url]: https://github.com/agentplexus/omnivault/blob/master/LICENSE
+ [used-by-svg]: https://sourcegraph.com/github.com/agentplexus/omnivault/-/badge.svg
+ [used-by-url]: https://sourcegraph.com/github.com/agentplexus/omnivault?badge
