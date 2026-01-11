@@ -10,26 +10,28 @@
       
       
       
-        <link rel="canonical" href="https://agentplexus.github.io/omnivault/">
+        <link rel="canonical" href="https://agentplexus.github.io/omnivault/releases/v0.2.0/">
       
       
+        <link rel="prev" href="../../cli/security/">
       
-        <link rel="next" href="installation/">
+      
+        <link rel="next" href="../v0.1.0/">
       
       
-      <link rel="icon" href="assets/images/favicon.png">
+      <link rel="icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.18">
     
     
       
-        <title>OmniVault</title>
+        <title>v0.2.0 - OmniVault</title>
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.7e37652d.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.7e37652d.min.css">
       
         
-        <link rel="stylesheet" href="assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -48,7 +50,7 @@
       
     
     
-    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -74,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#omnivault" class="md-skip">
+        <a href="#release-notes-v020" class="md-skip">
           Skip to content
         </a>
       
@@ -90,7 +92,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="." title="OmniVault" class="md-header__button md-logo" aria-label="OmniVault" data-md-component="logo">
+    <a href="../.." title="OmniVault" class="md-header__button md-logo" aria-label="OmniVault" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -110,7 +112,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Home
+              v0.2.0
             
           </span>
         </div>
@@ -226,7 +228,7 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="." title="OmniVault" class="md-nav__button md-logo" aria-label="OmniVault" data-md-component="logo">
+    <a href="../.." title="OmniVault" class="md-nav__button md-logo" aria-label="OmniVault" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -253,32 +255,10 @@
       
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    Home
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="." class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
         
   
   
@@ -289,86 +269,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#features" class="md-nav__link">
-    <span class="md-ellipsis">
-      Features
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#two-ways-to-use-omnivault" class="md-nav__link">
-    <span class="md-ellipsis">
-      Two Ways to Use OmniVault
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Two Ways to Use OmniVault">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#as-a-go-library" class="md-nav__link">
-    <span class="md-ellipsis">
-      As a Go Library
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#as-a-cli-tool" class="md-nav__link">
-    <span class="md-ellipsis">
-      As a CLI Tool
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#quick-links" class="md-nav__link">
-    <span class="md-ellipsis">
-      Quick Links
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#license" class="md-nav__link">
-    <span class="md-ellipsis">
-      License
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -380,7 +280,7 @@
   
   
     <li class="md-nav__item">
-      <a href="installation/" class="md-nav__link">
+      <a href="../../installation/" class="md-nav__link">
         
   
   
@@ -447,7 +347,7 @@
   
   
     <li class="md-nav__item">
-      <a href="library/quickstart/" class="md-nav__link">
+      <a href="../../library/quickstart/" class="md-nav__link">
         
   
   
@@ -470,7 +370,7 @@
   
   
     <li class="md-nav__item">
-      <a href="library/client/" class="md-nav__link">
+      <a href="../../library/client/" class="md-nav__link">
         
   
   
@@ -493,7 +393,7 @@
   
   
     <li class="md-nav__item">
-      <a href="library/resolver/" class="md-nav__link">
+      <a href="../../library/resolver/" class="md-nav__link">
         
   
   
@@ -516,7 +416,7 @@
   
   
     <li class="md-nav__item">
-      <a href="library/providers/" class="md-nav__link">
+      <a href="../../library/providers/" class="md-nav__link">
         
   
   
@@ -539,7 +439,7 @@
   
   
     <li class="md-nav__item">
-      <a href="library/custom-providers/" class="md-nav__link">
+      <a href="../../library/custom-providers/" class="md-nav__link">
         
   
   
@@ -614,7 +514,7 @@
   
   
     <li class="md-nav__item">
-      <a href="cli/quickstart/" class="md-nav__link">
+      <a href="../../cli/quickstart/" class="md-nav__link">
         
   
   
@@ -637,7 +537,7 @@
   
   
     <li class="md-nav__item">
-      <a href="cli/commands/" class="md-nav__link">
+      <a href="../../cli/commands/" class="md-nav__link">
         
   
   
@@ -660,7 +560,7 @@
   
   
     <li class="md-nav__item">
-      <a href="cli/daemon/" class="md-nav__link">
+      <a href="../../cli/daemon/" class="md-nav__link">
         
   
   
@@ -683,7 +583,7 @@
   
   
     <li class="md-nav__item">
-      <a href="cli/security/" class="md-nav__link">
+      <a href="../../cli/security/" class="md-nav__link">
         
   
   
@@ -710,8 +610,10 @@
       
   
   
+    
   
   
+  
     
     
     
@@ -722,13 +624,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
         
           
           <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
@@ -744,7 +644,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_5">
             <span class="md-nav__icon md-icon"></span>
             Releases
@@ -755,10 +655,32 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="releases/v0.2.0/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    v0.2.0
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -769,6 +691,155 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#highlights" class="md-nav__link">
+    <span class="md-ellipsis">
+      Highlights
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#new-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      New Features
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="New Features">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cli-tool-cmdomnivault" class="md-nav__link">
+    <span class="md-ellipsis">
+      CLI Tool (cmd/omnivault)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#encrypted-store-internalstore" class="md-nav__link">
+    <span class="md-ellipsis">
+      Encrypted Store (internal/store)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#daemon-server-internaldaemon" class="md-nav__link">
+    <span class="md-ellipsis">
+      Daemon Server (internal/daemon)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#daemon-client-internalclient" class="md-nav__link">
+    <span class="md-ellipsis">
+      Daemon Client (internal/client)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#platform-support" class="md-nav__link">
+    <span class="md-ellipsis">
+      Platform Support
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#security" class="md-nav__link">
+    <span class="md-ellipsis">
+      Security
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Security">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#encryption-specifications" class="md-nav__link">
+    <span class="md-ellipsis">
+      Encryption Specifications
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#storage-layout" class="md-nav__link">
+    <span class="md-ellipsis">
+      Storage Layout
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dependencies" class="md-nav__link">
+    <span class="md-ellipsis">
+      Dependencies
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#breaking-changes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Breaking Changes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#upgrade-guide" class="md-nav__link">
+    <span class="md-ellipsis">
+      Upgrade Guide
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -781,7 +852,7 @@
   
   
     <li class="md-nav__item">
-      <a href="releases/v0.1.0/" class="md-nav__link">
+      <a href="../v0.1.0/" class="md-nav__link">
         
   
   
@@ -811,7 +882,7 @@
   
   
     <li class="md-nav__item">
-      <a href="changelog/" class="md-nav__link">
+      <a href="../../changelog/" class="md-nav__link">
         
   
   
@@ -853,37 +924,64 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#features" class="md-nav__link">
+  <a href="#highlights" class="md-nav__link">
     <span class="md-ellipsis">
-      Features
+      Highlights
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#two-ways-to-use-omnivault" class="md-nav__link">
+  <a href="#new-features" class="md-nav__link">
     <span class="md-ellipsis">
-      Two Ways to Use OmniVault
+      New Features
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Two Ways to Use OmniVault">
+    <nav class="md-nav" aria-label="New Features">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#as-a-go-library" class="md-nav__link">
+  <a href="#cli-tool-cmdomnivault" class="md-nav__link">
     <span class="md-ellipsis">
-      As a Go Library
+      CLI Tool (cmd/omnivault)
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#as-a-cli-tool" class="md-nav__link">
+  <a href="#encrypted-store-internalstore" class="md-nav__link">
     <span class="md-ellipsis">
-      As a CLI Tool
+      Encrypted Store (internal/store)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#daemon-server-internaldaemon" class="md-nav__link">
+    <span class="md-ellipsis">
+      Daemon Server (internal/daemon)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#daemon-client-internalclient" class="md-nav__link">
+    <span class="md-ellipsis">
+      Daemon Client (internal/client)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#platform-support" class="md-nav__link">
+    <span class="md-ellipsis">
+      Platform Support
     </span>
   </a>
   
@@ -895,18 +993,60 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#quick-links" class="md-nav__link">
+  <a href="#security" class="md-nav__link">
     <span class="md-ellipsis">
-      Quick Links
+      Security
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Security">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#encryption-specifications" class="md-nav__link">
+    <span class="md-ellipsis">
+      Encryption Specifications
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#storage-layout" class="md-nav__link">
+    <span class="md-ellipsis">
+      Storage Layout
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dependencies" class="md-nav__link">
+    <span class="md-ellipsis">
+      Dependencies
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#license" class="md-nav__link">
+  <a href="#breaking-changes" class="md-nav__link">
     <span class="md-ellipsis">
-      License
+      Breaking Changes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#upgrade-guide" class="md-nav__link">
+    <span class="md-ellipsis">
+      Upgrade Guide
     </span>
   </a>
   
@@ -931,80 +1071,139 @@
   
 
 
-<h1 id="omnivault">OmniVault<a class="headerlink" href="#omnivault" title="Permanent link">&para;</a></h1>
-<p><a href="https://github.com/agentplexus/omnivault/actions/workflows/ci.yaml"><img alt="Build Status" src="https://github.com/agentplexus/omnivault/actions/workflows/ci.yaml/badge.svg?branch=main" /></a>
-<a href="https://goreportcard.com/report/github.com/agentplexus/omnivault"><img alt="Go Report Card" src="https://goreportcard.com/badge/github.com/agentplexus/omnivault" /></a>
-<a href="https://pkg.go.dev/github.com/agentplexus/omnivault"><img alt="GoDoc" src="https://pkg.go.dev/badge/github.com/agentplexus/omnivault" /></a>
-<a href="https://github.com/agentplexus/omnivault/blob/master/LICENSE"><img alt="License" src="https://img.shields.io/badge/license-MIT-blue.svg" /></a></p>
-<p>OmniVault is a unified Go library for secret management across multiple providers. It provides a single interface for accessing secrets from password managers, cloud secret managers, enterprise vaults, and local storage.</p>
-<h2 id="features">Features<a class="headerlink" href="#features" title="Permanent link">&para;</a></h2>
+<h1 id="release-notes-v020">Release Notes - v0.2.0<a class="headerlink" href="#release-notes-v020" title="Permanent link">&para;</a></h1>
+<p><strong>Release Date:</strong> 2026-01-10</p>
+<p>This release introduces the OmniVault CLI tool with encrypted local storage and a daemon architecture for secure secret management.</p>
+<h2 id="highlights">Highlights<a class="headerlink" href="#highlights" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>Unified Interface</strong> - Single API for all secret storage backends</li>
-<li><strong>Extensible Architecture</strong> - Add custom providers as separate Go modules without modifying the core library</li>
-<li><strong>URI-Based Resolution</strong> - Reference secrets using URIs like <code>op://vault/item/field</code> or <code>aws-sm://secret-name</code></li>
-<li><strong>Built-in Providers</strong> - Environment variables, file-based, and in-memory storage included</li>
-<li><strong>Zero External Dependencies</strong> - Core library has no external dependencies beyond the standard library</li>
-<li><strong>CLI Tool</strong> - Command-line interface with encrypted local storage and daemon architecture</li>
-<li><strong>Secure Local Storage</strong> - AES-256-GCM encryption with Argon2id key derivation</li>
+<li><strong>CLI Tool</strong>: Full-featured command-line interface for local secret management</li>
+<li><strong>Encrypted Storage</strong>: AES-256-GCM encryption with Argon2id key derivation</li>
+<li><strong>Daemon Architecture</strong>: Background service with Unix socket IPC for secure operations</li>
+<li><strong>Auto-Lock</strong>: Configurable inactivity timeout for enhanced security</li>
 </ul>
-<h2 id="two-ways-to-use-omnivault">Two Ways to Use OmniVault<a class="headerlink" href="#two-ways-to-use-omnivault" title="Permanent link">&para;</a></h2>
-<h3 id="as-a-go-library">As a Go Library<a class="headerlink" href="#as-a-go-library" title="Permanent link">&para;</a></h3>
-<p>Import OmniVault into your Go application to access secrets from multiple providers:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span><span class="w"> </span><span class="s">&quot;github.com/agentplexus/omnivault&quot;</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="nx">client</span><span class="p">,</span><span class="w"> </span><span class="nx">_</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">omnivault</span><span class="p">.</span><span class="nx">NewClient</span><span class="p">(</span><span class="nx">omnivault</span><span class="p">.</span><span class="nx">Config</span><span class="p">{</span>
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">    </span><span class="nx">Provider</span><span class="p">:</span><span class="w"> </span><span class="nx">omnivault</span><span class="p">.</span><span class="nx">ProviderEnv</span><span class="p">,</span>
-<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="p">})</span>
-<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
-<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="nx">secret</span><span class="p">,</span><span class="w"> </span><span class="nx">_</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">client</span><span class="p">.</span><span class="nx">Get</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;API_KEY&quot;</span><span class="p">)</span>
-<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">secret</span><span class="p">.</span><span class="nx">Value</span><span class="p">)</span>
+<h2 id="new-features">New Features<a class="headerlink" href="#new-features" title="Permanent link">&para;</a></h2>
+<h3 id="cli-tool-cmdomnivault">CLI Tool (<code>cmd/omnivault</code>)<a class="headerlink" href="#cli-tool-cmdomnivault" title="Permanent link">&para;</a></h3>
+<p>A complete command-line interface for managing secrets locally:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># Initialize and use the vault</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>omnivault<span class="w"> </span>daemon<span class="w"> </span>start
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>omnivault<span class="w"> </span>init
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>omnivault<span class="w"> </span><span class="nb">set</span><span class="w"> </span>database/password
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>omnivault<span class="w"> </span>get<span class="w"> </span>database/password
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>omnivault<span class="w"> </span>list
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>omnivault<span class="w"> </span>lock
 </code></pre></div>
-<p><a href="library/quickstart/">Get started with the library →</a></p>
-<h3 id="as-a-cli-tool">As a CLI Tool<a class="headerlink" href="#as-a-cli-tool" title="Permanent link">&para;</a></h3>
-<p>Use the <code>omnivault</code> command-line tool for secure local secret management:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>omnivault<span class="w"> </span>daemon<span class="w"> </span>start
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>omnivault<span class="w"> </span>init
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>omnivault<span class="w"> </span><span class="nb">set</span><span class="w"> </span>database/password
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>omnivault<span class="w"> </span>get<span class="w"> </span>database/password
-</code></pre></div>
-<p><a href="cli/quickstart/">Get started with the CLI →</a></p>
-<h2 id="quick-links">Quick Links<a class="headerlink" href="#quick-links" title="Permanent link">&para;</a></h2>
+<p><strong>Vault Commands:</strong></p>
+<ul>
+<li><code>omnivault init</code> - Initialize a new vault with master password</li>
+<li><code>omnivault unlock</code> - Unlock the vault</li>
+<li><code>omnivault lock</code> - Lock the vault</li>
+<li><code>omnivault status</code> - Show vault and daemon status</li>
+</ul>
+<p><strong>Secret Commands:</strong></p>
+<ul>
+<li><code>omnivault get &lt;path&gt;</code> - Retrieve a secret</li>
+<li><code>omnivault set &lt;path&gt; [value]</code> - Store a secret (prompts if value not provided)</li>
+<li><code>omnivault list [prefix]</code> - List secrets</li>
+<li><code>omnivault delete &lt;path&gt;</code> - Delete a secret</li>
+</ul>
+<p><strong>Daemon Commands:</strong></p>
+<ul>
+<li><code>omnivault daemon start</code> - Start background daemon</li>
+<li><code>omnivault daemon stop</code> - Stop daemon</li>
+<li><code>omnivault daemon status</code> - Show daemon status</li>
+<li><code>omnivault daemon run</code> - Run in foreground (debugging)</li>
+</ul>
+<h3 id="encrypted-store-internalstore">Encrypted Store (<code>internal/store</code>)<a class="headerlink" href="#encrypted-store-internalstore" title="Permanent link">&para;</a></h3>
+<p>Secure local storage implementing the <code>vault.Vault</code> interface:</p>
+<ul>
+<li>AES-256-GCM authenticated encryption</li>
+<li>Argon2id key derivation (OWASP-recommended parameters)</li>
+<li>Password verification with constant-time comparison</li>
+<li>Master password change with re-encryption of all secrets</li>
+</ul>
+<h3 id="daemon-server-internaldaemon">Daemon Server (<code>internal/daemon</code>)<a class="headerlink" href="#daemon-server-internaldaemon" title="Permanent link">&para;</a></h3>
+<p>Background service for secure vault operations:</p>
+<ul>
+<li>HTTP over Unix socket (<code>~/.omnivault/omnivaultd.sock</code>)</li>
+<li>RESTful API for all vault operations</li>
+<li>Auto-lock after configurable inactivity (default: 15 minutes)</li>
+<li>Graceful shutdown with vault locking</li>
+<li>PID file management</li>
+</ul>
+<h3 id="daemon-client-internalclient">Daemon Client (<code>internal/client</code>)<a class="headerlink" href="#daemon-client-internalclient" title="Permanent link">&para;</a></h3>
+<p>Go client library for daemon IPC:</p>
+<ul>
+<li>Unix socket transport</li>
+<li>Structured error handling with error codes</li>
+<li>Connection pooling with timeouts</li>
+</ul>
+<h3 id="platform-support">Platform Support<a class="headerlink" href="#platform-support" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>macOS/Linux</strong>: Unix socket at <code>~/.omnivault/omnivaultd.sock</code></li>
+<li><strong>Windows</strong>: TCP fallback (named pipe support planned)</li>
+</ul>
+<h2 id="security">Security<a class="headerlink" href="#security" title="Permanent link">&para;</a></h2>
+<h3 id="encryption-specifications">Encryption Specifications<a class="headerlink" href="#encryption-specifications" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
-<th>Section</th>
-<th>Description</th>
+<th>Component</th>
+<th>Specification</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><a href="installation/">Installation</a></td>
-<td>Install the library or CLI</td>
+<td>Algorithm</td>
+<td>AES-256-GCM</td>
 </tr>
 <tr>
-<td><a href="library/quickstart/">Library Quick Start</a></td>
-<td>Get started with the Go library</td>
+<td>Key Derivation</td>
+<td>Argon2id</td>
 </tr>
 <tr>
-<td><a href="cli/quickstart/">CLI Quick Start</a></td>
-<td>Get started with the CLI</td>
+<td>Argon2 Time</td>
+<td>3 iterations</td>
 </tr>
 <tr>
-<td><a href="library/providers/">Providers</a></td>
-<td>Available secret providers</td>
+<td>Argon2 Memory</td>
+<td>64 MB</td>
 </tr>
 <tr>
-<td><a href="cli/security/">Security</a></td>
-<td>CLI security model</td>
+<td>Argon2 Threads</td>
+<td>4</td>
 </tr>
 <tr>
-<td><a href="changelog/">Changelog</a></td>
-<td>Release history</td>
+<td>Salt Size</td>
+<td>32 bytes</td>
+</tr>
+<tr>
+<td>Nonce Size</td>
+<td>12 bytes</td>
 </tr>
 </tbody>
 </table>
-<h2 id="license">License<a class="headerlink" href="#license" title="Permanent link">&para;</a></h2>
-<p>MIT License - see <a href="https://github.com/agentplexus/omnivault/blob/master/LICENSE">LICENSE</a> for details.</p>
+<h3 id="storage-layout">Storage Layout<a class="headerlink" href="#storage-layout" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>~/.omnivault/
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>├── vault.enc           # Encrypted secrets
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>├── vault.meta          # Salt and Argon2 parameters
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>├── omnivaultd.sock     # Unix socket (runtime)
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>└── omnivaultd.pid      # Daemon PID (runtime)
+</code></pre></div>
+<h2 id="dependencies">Dependencies<a class="headerlink" href="#dependencies" title="Permanent link">&para;</a></h2>
+<p>New dependencies added:</p>
+<ul>
+<li><code>golang.org/x/crypto</code> - Argon2id key derivation</li>
+<li><code>golang.org/x/term</code> - Secure password input</li>
+</ul>
+<h2 id="breaking-changes">Breaking Changes<a class="headerlink" href="#breaking-changes" title="Permanent link">&para;</a></h2>
+<p>None. This release adds new functionality without modifying the existing library API.</p>
+<h2 id="upgrade-guide">Upgrade Guide<a class="headerlink" href="#upgrade-guide" title="Permanent link">&para;</a></h2>
+<p>No changes required for existing library users. The CLI tool is an optional addition.</p>
+<p>To use the CLI:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>go<span class="w"> </span>install<span class="w"> </span>github.com/agentplexus/omnivault/cmd/omnivault@v0.2.0
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>omnivault<span class="w"> </span>daemon<span class="w"> </span>start
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>omnivault<span class="w"> </span>init
+</code></pre></div>
 
 
 
@@ -1075,10 +1274,10 @@
     
     
       
-      <script id="__config" type="application/json">{"base": ".", "features": ["navigation.sections", "navigation.expand", "navigation.top", "content.code.copy", "content.code.annotate"], "search": "assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.sections", "navigation.expand", "navigation.top", "content.code.copy", "content.code.annotate"], "search": "../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="assets/javascripts/bundle.92b07e13.min.js"></script>
+      <script src="../../assets/javascripts/bundle.92b07e13.min.js"></script>
       
     
   </body>
