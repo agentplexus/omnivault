@@ -19,44 +19,61 @@ import (
 
 // Client is a client for the OmniVault daemon.
 type Client struct {
-	socketPath string
+	socketPath string // Unix socket path (Unix only)
+	tcpAddr    string // TCP address (Windows only)
 	httpClient *http.Client
 }
 
 // New creates a new daemon client.
 func New() *Client {
-	return NewWithSocket(config.GetPaths().SocketPath)
+	paths := config.GetPaths()
+	return NewWithPaths(paths.SocketPath, paths.TCPAddr)
 }
 
 // NewWithSocket creates a new daemon client with a custom socket path (for testing).
+// Deprecated: Use NewWithPaths for cross-platform support.
 func NewWithSocket(socketPath string) *Client {
-	// Create HTTP client with Unix socket transport
+	return NewWithPaths(socketPath, "")
+}
+
+// NewWithPaths creates a new daemon client with custom paths (for testing).
+func NewWithPaths(socketPath, tcpAddr string) *Client {
+	c := &Client{
+		socketPath: socketPath,
+		tcpAddr:    tcpAddr,
+	}
+
+	// Create HTTP client with appropriate transport
 	transport := &http.Transport{
 		DialContext: func(ctx context.Context, _, _ string) (net.Conn, error) {
 			if runtime.GOOS == "windows" {
-				// Windows: use TCP (temporary until named pipe support)
-				return net.Dial("tcp", "127.0.0.1:0")
+				return net.Dial("tcp", c.tcpAddr)
 			}
-			return net.Dial("unix", socketPath)
+			return net.Dial("unix", c.socketPath)
 		},
 	}
 
-	return &Client{
-		socketPath: socketPath,
-		httpClient: &http.Client{
-			Transport: transport,
-			Timeout:   30 * time.Second,
-		},
+	c.httpClient = &http.Client{
+		Transport: transport,
+		Timeout:   30 * time.Second,
 	}
+
+	return c
 }
 
 // IsDaemonRunning checks if the daemon is running.
 func (c *Client) IsDaemonRunning() bool {
 	if runtime.GOOS == "windows" {
-		// TODO: Check Windows named pipe
-		return false
+		// Windows: try to connect via TCP
+		conn, err := net.DialTimeout("tcp", c.tcpAddr, time.Second)
+		if err != nil {
+			return false
+		}
+		conn.Close()
+		return true
 	}
 
+	// Unix: check socket file exists
 	_, err := os.Stat(c.socketPath)
 	if err != nil {
 		return false

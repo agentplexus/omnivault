@@ -159,9 +159,8 @@ func (s *Server) Shutdown() error {
 // createListener creates the appropriate listener for the platform.
 func (s *Server) createListener() (net.Listener, error) {
 	if runtime.GOOS == "windows" {
-		// Windows named pipe would require additional library
-		// For now, use TCP on localhost
-		return net.Listen("tcp", "127.0.0.1:0")
+		// Windows uses TCP on localhost
+		return net.Listen("tcp", s.paths.TCPAddr)
 	}
 
 	return net.Listen("unix", s.paths.SocketPath)

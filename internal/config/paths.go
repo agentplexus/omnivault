@@ -18,8 +18,11 @@ type Paths struct {
 	// MetaFile is the vault metadata file (salt, params).
 	MetaFile string
 
-	// SocketPath is the Unix socket path for the daemon.
+	// SocketPath is the Unix socket path for the daemon (Unix only).
 	SocketPath string
+
+	// TCPAddr is the TCP address for the daemon (Windows only).
+	TCPAddr string
 
 	// PIDFile is the daemon PID file.
 	PIDFile string
@@ -71,7 +74,8 @@ func windowsPaths() *Paths {
 		ConfigDir:  configDir,
 		VaultFile:  filepath.Join(configDir, "vault.enc"),
 		MetaFile:   filepath.Join(configDir, "vault.meta"),
-		SocketPath: `\\.\pipe\omnivault`,
+		SocketPath: "", // Not used on Windows
+		TCPAddr:    "127.0.0.1:19839",
 		PIDFile:    filepath.Join(configDir, "omnivaultd.pid"),
 		LogFile:    filepath.Join(configDir, "omnivaultd.log"),
 	}

@@ -3,8 +3,10 @@ package integration
 
 import (
 	"context"
+	"fmt"
 	"os"
 	"path/filepath"
+	"sync/atomic"
 	"testing"
 	"time"
 
@@ -12,6 +14,9 @@ import (
 	"github.com/agentplexus/omnivault/internal/config"
 	"github.com/agentplexus/omnivault/internal/daemon"
 )
+
+// testPortCounter is used to allocate unique ports for Windows tests.
+var testPortCounter uint32 = 19840
 
 // testEnv holds the test environment configuration.
 type testEnv struct {
@@ -34,12 +39,17 @@ func setupTestEnv(t *testing.T) *testEnv {
 		t.Fatalf("Failed to create temp dir: %v", err)
 	}
 
+	// Allocate unique port for Windows tests
+	port := atomic.AddUint32(&testPortCounter, 1)
+	tcpAddr := fmt.Sprintf("127.0.0.1:%d", port)
+
 	// Override paths to use temp directory
 	paths := &config.Paths{
 		ConfigDir:  tempDir,
 		VaultFile:  filepath.Join(tempDir, "vault.enc"),
 		MetaFile:   filepath.Join(tempDir, "vault.meta"),
 		SocketPath: filepath.Join(tempDir, "omnivaultd.sock"),
+		TCPAddr:    tcpAddr,
 		PIDFile:    filepath.Join(tempDir, "omnivaultd.pid"),
 		LogFile:    filepath.Join(tempDir, "omnivaultd.log"),
 	}
@@ -65,8 +75,8 @@ func setupTestEnv(t *testing.T) *testEnv {
 	// Wait for server to start
 	time.Sleep(100 * time.Millisecond)
 
-	// Create client with custom socket path
-	env.client = newTestClient(paths.SocketPath)
+	// Create client with custom paths
+	env.client = newTestClientWithPaths(paths.SocketPath, paths.TCPAddr)
 
 	return env
 }
@@ -98,9 +108,9 @@ func newTestServer(paths *config.Paths) *daemon.Server {
 	}, paths)
 }
 
-// newTestClient creates a client with a custom socket path.
-func newTestClient(socketPath string) *client.Client {
-	return client.NewWithSocket(socketPath)
+// newTestClientWithPaths creates a client with custom paths for testing.
+func newTestClientWithPaths(socketPath, tcpAddr string) *client.Client {
+	return client.NewWithPaths(socketPath, tcpAddr)
 }
 
 // TestDaemonLifecycle tests basic daemon operations.
