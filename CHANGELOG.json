@@ -1,0 +1,96 @@
+{
+  "ir_version": "1.0",
+  "project": "omnivault",
+  "repository": "https://github.com/agentplexus/omnivault",
+  "unreleased": {},
+  "releases": [
+    {
+      "version": "v0.2.0",
+      "date": "2026-01-10",
+      "added": [
+        {
+          "description": "CLI tool (`cmd/omnivault`) for local secret management"
+        },
+        {
+          "description": "Encrypted local store with AES-256-GCM encryption (`internal/store`)"
+        },
+        {
+          "description": "Argon2id key derivation with OWASP-recommended parameters"
+        },
+        {
+          "description": "Daemon server with Unix socket IPC (`internal/daemon`)"
+        },
+        {
+          "description": "Daemon client library for IPC (`internal/client`)"
+        },
+        {
+          "description": "Platform-specific path configuration (`internal/config`)"
+        },
+        {
+          "description": "Auto-lock with configurable inactivity timeout (default: 15 minutes)"
+        },
+        {
+          "description": "Master password change with automatic re-encryption"
+        },
+        {
+          "description": "CLI commands: `init`, `unlock`, `lock`, `status`, `get`, `set`, `list`, `delete`"
+        },
+        {
+          "description": "Daemon commands: `daemon start`, `daemon stop`, `daemon status`, `daemon run`"
+        },
+        {
+          "description": "Secure password input without terminal echo"
+        },
+        {
+          "description": "Integration tests for daemon and encrypted store"
+        }
+      ],
+      "changed": [
+        {
+          "description": "Go version updated to 1.24.0"
+        }
+      ],
+      "security": [
+        {
+          "description": "Secrets encrypted at rest using AES-256-GCM"
+        },
+        {
+          "description": "Master password never stored, only used for key derivation"
+        },
+        {
+          "description": "Constant-time password verification to prevent timing attacks"
+        },
+        {
+          "description": "Keys zeroed from memory on vault lock"
+        }
+      ]
+    },
+    {
+      "version": "v0.1.0",
+      "date": "2025-01-01",
+      "added": [
+        {
+          "description": "Core `vault.Vault` interface for secret management"
+        },
+        {
+          "description": "Built-in providers: environment variables, file-based, in-memory"
+        },
+        {
+          "description": "URI-based secret resolution with `Resolver`"
+        },
+        {
+          "description": "Client API with `Get`, `Set`, `Delete`, `List`, `Exists` operations"
+        },
+        {
+          "description": "Extensible provider architecture for external modules"
+        },
+        {
+          "description": "Secret metadata support with tags and timestamps"
+        },
+        {
+          "description": "Multi-field secrets support"
+        }
+      ]
+    }
+  ]
+}

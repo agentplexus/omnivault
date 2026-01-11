@@ -15,11 +15,21 @@ OmniVault is a unified Go library for secret management across multiple provider
 - **URI-Based Resolution**: Reference secrets using URIs like `op://vault/item/field` or `aws-sm://secret-name`
 - **Built-in Providers**: Environment variables, file-based, and in-memory storage included
 - **Zero External Dependencies**: Core library has no external dependencies beyond the standard library
+- **CLI Tool**: Command-line interface with encrypted local storage and daemon architecture
+- **Secure Local Storage**: AES-256-GCM encryption with Argon2id key derivation
 
 ## Installation
 
+### Go Library
+
 ```bash
 go get github.com/agentplexus/omnivault
+```
+
+### CLI Tool
+
+```bash
+go install github.com/agentplexus/omnivault/cmd/omnivault@latest
 ```
 
 ## Quick Start
@@ -357,6 +367,107 @@ This architecture ensures:
 - External providers don't bloat the core library with dependencies
 - Providers can be versioned independently
 - Users only install the providers they need
+
+---
+
+## CLI Tool
+
+The `omnivault` CLI provides secure local secret management with a daemon architecture.
+
+### CLI Quick Start
+
+```bash
+# Start the daemon
+omnivault daemon start
+
+# Initialize a new vault with a master password
+omnivault init
+
+# Store a secret
+omnivault set database/password
+
+# Retrieve a secret
+omnivault get database/password
+
+# List all secrets
+omnivault list
+
+# Lock the vault
+omnivault lock
+
+# Unlock the vault
+omnivault unlock
+
+# Check status
+omnivault status
+```
+
+### CLI Commands
+
+#### Vault Commands
+
+| Command | Description |
+|---------|-------------|
+| `omnivault init` | Initialize a new vault with a master password |
+| `omnivault unlock` | Unlock the vault with master password |
+| `omnivault lock` | Lock the vault |
+| `omnivault status` | Show vault and daemon status |
+
+#### Secret Commands
+
+| Command | Description |
+|---------|-------------|
+| `omnivault get <path>` | Get a secret value |
+| `omnivault set <path> [value]` | Set a secret (prompts for value if not provided) |
+| `omnivault list [prefix]` | List secrets, optionally filtered by prefix |
+| `omnivault delete <path>` | Delete a secret (with confirmation) |
+
+#### Daemon Commands
+
+| Command | Description |
+|---------|-------------|
+| `omnivault daemon start` | Start the daemon in background |
+| `omnivault daemon stop` | Stop the daemon |
+| `omnivault daemon status` | Show daemon status |
+| `omnivault daemon run` | Run daemon in foreground (for debugging) |
+
+### Daemon Architecture
+
+The CLI uses a daemon (background service) architecture for secure secret access:
+
+- **Unix Socket IPC**: Communication via `~/.omnivault/omnivaultd.sock`
+- **Session-Based Unlock**: Vault stays unlocked until locked or timeout
+- **Auto-Lock**: Configurable inactivity timeout (default: 15 minutes)
+- **Graceful Shutdown**: Vault is locked on daemon shutdown
+
+### Security Model
+
+#### Encryption
+
+- **Algorithm**: AES-256-GCM (authenticated encryption)
+- **Key Derivation**: Argon2id (memory-hard, resistant to GPU attacks)
+  - 3 iterations
+  - 64 MB memory
+  - 4 parallel threads
+- **Salt**: Random 32 bytes per vault
+- **Nonce**: Random 12 bytes per secret
+
+#### Storage
+
+```
+~/.omnivault/
+├── vault.enc           # Encrypted secrets (AES-256-GCM)
+├── vault.meta          # Unencrypted metadata (salt, Argon2 params)
+├── omnivaultd.sock     # Unix socket (runtime)
+└── omnivaultd.pid      # Daemon PID file (runtime)
+```
+
+#### Master Password
+
+- Never stored on disk
+- Used only to derive the encryption key
+- Minimum 8 characters enforced
+- Session-based unlock with configurable timeout
 
 ## Contributing
 
