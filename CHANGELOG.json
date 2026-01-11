@@ -2,6 +2,8 @@
   "ir_version": "1.0",
   "project": "omnivault",
   "repository": "https://github.com/agentplexus/omnivault",
+  "versioning": "semver",
+  "commit_convention": "conventional",
   "unreleased": {},
   "releases": [
     {
@@ -20,46 +22,60 @@
       ],
       "added": [
         {
-          "description": "CLI tool (`cmd/omnivault`) for local secret management"
+          "description": "CLI tool (`cmd/omnivault`) for local secret management",
+          "commit": "e8c2cd1"
         },
         {
-          "description": "Encrypted local store with AES-256-GCM encryption (`internal/store`)"
+          "description": "Encrypted local store with AES-256-GCM encryption (`internal/store`)",
+          "commit": "00b5bbd"
         },
         {
-          "description": "Argon2id key derivation with OWASP-recommended parameters"
+          "description": "Argon2id key derivation with OWASP-recommended parameters",
+          "commit": "00b5bbd"
         },
         {
-          "description": "Daemon server with Unix socket IPC (`internal/daemon`)"
+          "description": "Daemon server with Unix socket IPC (`internal/daemon`)",
+          "commit": "8942c99"
         },
         {
-          "description": "Daemon client library for IPC (`internal/client`)"
+          "description": "Daemon client library for IPC (`internal/client`)",
+          "commit": "050da9c"
         },
         {
-          "description": "Platform-specific path configuration (`internal/config`)"
+          "description": "Platform-specific path configuration (`internal/config`)",
+          "commit": "8942c99"
         },
         {
-          "description": "Auto-lock with configurable inactivity timeout (default: 15 minutes)"
+          "description": "Auto-lock with configurable inactivity timeout (default: 15 minutes)",
+          "commit": "8942c99"
         },
         {
-          "description": "Master password change with automatic re-encryption"
+          "description": "Master password change with automatic re-encryption",
+          "commit": "00b5bbd"
         },
         {
-          "description": "CLI commands: `init`, `unlock`, `lock`, `status`, `get`, `set`, `list`, `delete`"
+          "description": "CLI commands: `init`, `unlock`, `lock`, `status`, `get`, `set`, `list`, `delete`",
+          "commit": "e8c2cd1"
         },
         {
-          "description": "Daemon commands: `daemon start`, `daemon stop`, `daemon status`, `daemon run`"
+          "description": "Daemon commands: `daemon start`, `daemon stop`, `daemon status`, `daemon run`",
+          "commit": "e8c2cd1"
         },
         {
-          "description": "Secure password input without terminal echo"
+          "description": "Secure password input without terminal echo",
+          "commit": "e8c2cd1"
         },
         {
-          "description": "Integration tests for daemon and encrypted store"
+          "description": "Integration tests for daemon and encrypted store",
+          "commit": "9fa1cbf"
         },
         {
-          "description": "Windows daemon support via TCP on localhost (`127.0.0.1:19839`)"
+          "description": "Windows daemon support via TCP on localhost (`127.0.0.1:19839`)",
+          "commit": "c8a501a"
         },
         {
-          "description": "Cross-platform IPC: Unix socket on macOS/Linux, TCP on Windows"
+          "description": "Cross-platform IPC: Unix socket on macOS/Linux, TCP on Windows",
+          "commit": "c8a501a"
         }
       ],
       "changed": [
@@ -69,16 +85,20 @@
       ],
       "security": [
         {
-          "description": "Secrets encrypted at rest using AES-256-GCM"
+          "description": "Secrets encrypted at rest using AES-256-GCM",
+          "commit": "00b5bbd"
         },
         {
-          "description": "Master password never stored, only used for key derivation"
+          "description": "Master password never stored, only used for key derivation",
+          "commit": "00b5bbd"
         },
         {
-          "description": "Constant-time password verification to prevent timing attacks"
+          "description": "Constant-time password verification to prevent timing attacks",
+          "commit": "00b5bbd"
         },
         {
-          "description": "Keys zeroed from memory on vault lock"
+          "description": "Keys zeroed from memory on vault lock",
+          "commit": "8942c99"
         }
       ]
     },
@@ -98,25 +118,32 @@
       ],
       "added": [
         {
-          "description": "Core `vault.Vault` interface for secret management"
+          "description": "Core `vault.Vault` interface for secret management",
+          "commit": "91795f4"
         },
         {
-          "description": "Built-in providers: environment variables, file-based, in-memory"
+          "description": "Built-in providers: environment variables, file-based, in-memory",
+          "commit": "91795f4"
         },
         {
-          "description": "URI-based secret resolution with `Resolver`"
+          "description": "URI-based secret resolution with `Resolver`",
+          "commit": "91795f4"
         },
         {
-          "description": "Client API with `Get`, `Set`, `Delete`, `List`, `Exists` operations"
+          "description": "Client API with `Get`, `Set`, `Delete`, `List`, `Exists` operations",
+          "commit": "91795f4"
         },
         {
-          "description": "Extensible provider architecture for external modules"
+          "description": "Extensible provider architecture for external modules",
+          "commit": "91795f4"
         },
         {
-          "description": "Secret metadata support with tags and timestamps"
+          "description": "Secret metadata support with tags and timestamps",
+          "commit": "91795f4"
         },
         {
-          "description": "Multi-field secrets support"
+          "description": "Multi-field secrets support",
+          "commit": "91795f4"
         }
       ]
     }
