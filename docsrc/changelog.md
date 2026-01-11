@@ -30,6 +30,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Daemon commands: `daemon start`, `daemon stop`, `daemon status`, `daemon run`
 - Secure password input without terminal echo
 - Integration tests for daemon and encrypted store
+- Windows daemon support via TCP on localhost (`127.0.0.1:19839`)
+- Cross-platform IPC: Unix socket on macOS/Linux, TCP on Windows
 
 ### Changed
 

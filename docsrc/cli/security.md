@@ -73,11 +73,22 @@ subtle.ConstantTimeCompare(decrypted, expectedMagic)
 
 ### File Structure
 
+**macOS / Linux:**
+
 ```
 ~/.omnivault/
 ├── vault.enc           # Encrypted secrets
 ├── vault.meta          # Unencrypted metadata
 ├── omnivaultd.sock     # Unix socket (runtime)
+└── omnivaultd.pid      # PID file (runtime)
+```
+
+**Windows:**
+
+```
+%LOCALAPPDATA%\OmniVault\
+├── vault.enc           # Encrypted secrets
+├── vault.meta          # Unencrypted metadata
 └── omnivaultd.pid      # PID file (runtime)
 ```
 

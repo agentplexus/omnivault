@@ -435,10 +435,18 @@ omnivault status
 
 The CLI uses a daemon (background service) architecture for secure secret access:
 
-- **Unix Socket IPC**: Communication via `~/.omnivault/omnivaultd.sock`
+- **Cross-Platform IPC**: Unix socket on macOS/Linux, TCP localhost on Windows
 - **Session-Based Unlock**: Vault stays unlocked until locked or timeout
 - **Auto-Lock**: Configurable inactivity timeout (default: 15 minutes)
 - **Graceful Shutdown**: Vault is locked on daemon shutdown
+
+#### Platform Support
+
+| Platform | IPC Method | Socket/Address |
+|----------|------------|----------------|
+| macOS | Unix Socket | `~/.omnivault/omnivaultd.sock` |
+| Linux | Unix Socket | `~/.omnivault/omnivaultd.sock` |
+| Windows | TCP | `127.0.0.1:19839` |
 
 ### Security Model
 
@@ -454,11 +462,22 @@ The CLI uses a daemon (background service) architecture for secure secret access
 
 #### Storage
 
+**macOS / Linux:**
+
 ```
 ~/.omnivault/
 ├── vault.enc           # Encrypted secrets (AES-256-GCM)
 ├── vault.meta          # Unencrypted metadata (salt, Argon2 params)
 ├── omnivaultd.sock     # Unix socket (runtime)
+└── omnivaultd.pid      # Daemon PID file (runtime)
+```
+
+**Windows:**
+
+```
+%LOCALAPPDATA%\OmniVault\
+├── vault.enc           # Encrypted secrets (AES-256-GCM)
+├── vault.meta          # Unencrypted metadata (salt, Argon2 params)
 └── omnivaultd.pid      # Daemon PID file (runtime)
 ```
 

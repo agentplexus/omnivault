@@ -27,7 +27,7 @@ The daemon architecture provides several security benefits:
                                      └──────────────┘
 ```
 
-1. CLI sends commands to daemon via Unix socket
+1. CLI sends commands to daemon via Unix socket (macOS/Linux) or TCP (Windows)
 2. Daemon holds encryption key in memory
 3. Daemon performs all cryptographic operations
 4. Files on disk are always encrypted
@@ -150,13 +150,22 @@ The daemon creates and manages these files:
 
 - Uses Unix socket at `~/.omnivault/omnivaultd.sock`
 - Standard Unix permissions apply
-- Process daemonization via fork
+- Process daemonization via `Setpgid`
+- Graceful shutdown via SIGTERM
 
 ### Windows
 
-- Currently uses TCP on localhost (temporary)
-- Named pipe support planned
-- Process started with `Setpgid`
+- Uses TCP on `127.0.0.1:19839`
+- Vault files stored in `%LOCALAPPDATA%\OmniVault\`
+- Process termination via `Process.Kill()`
+- No socket file (TCP-based IPC)
+
+| Feature | macOS/Linux | Windows |
+|---------|-------------|---------|
+| IPC | Unix Socket | TCP localhost |
+| Address | `~/.omnivault/omnivaultd.sock` | `127.0.0.1:19839` |
+| Config Dir | `~/.omnivault/` | `%LOCALAPPDATA%\OmniVault\` |
+| Shutdown | SIGTERM | Process.Kill() |
 
 ## Debugging
 

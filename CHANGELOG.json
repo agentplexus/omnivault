@@ -43,6 +43,12 @@
         },
         {
           "description": "Integration tests for daemon and encrypted store"
+        },
+        {
+          "description": "Windows daemon support via TCP on localhost (`127.0.0.1:19839`)"
+        },
+        {
+          "description": "Cross-platform IPC: Unix socket on macOS/Linux, TCP on Windows"
         }
       ],
       "changed": [
