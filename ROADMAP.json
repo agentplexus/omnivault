@@ -11,6 +11,16 @@
     "future": {"emoji": "💡", "description": "Under Consideration"}
   },
 
+  "areas": [
+    {"id": "core", "name": "Core Library", "description": "Core interfaces and types"},
+    {"id": "providers", "name": "Providers", "description": "Secret storage providers"},
+    {"id": "security", "name": "Security", "description": "Encryption and security features"},
+    {"id": "daemon", "name": "Daemon", "description": "Background service"},
+    {"id": "cli", "name": "CLI", "description": "Command-line interface"},
+    {"id": "client", "name": "Client", "description": "Client libraries"},
+    {"id": "ui", "name": "UI", "description": "User interface (Swift/macOS)"}
+  ],
+
   "phases": [
     {
       "id": "library",
@@ -63,7 +73,9 @@
       "status": "completed",
       "version": "v0.1.0",
       "phase": "library",
-      "type": "Added"
+      "type": "Added",
+      "area": "core",
+      "priority": "high"
     },
     {
       "id": "builtin-providers",
@@ -71,7 +83,9 @@
       "status": "completed",
       "version": "v0.1.0",
       "phase": "library",
-      "type": "Added"
+      "type": "Added",
+      "area": "providers",
+      "priority": "high"
     },
     {
       "id": "uri-resolver",
@@ -79,7 +93,9 @@
       "status": "completed",
       "version": "v0.1.0",
       "phase": "library",
-      "type": "Added"
+      "type": "Added",
+      "area": "core",
+      "priority": "high"
     },
     {
       "id": "provider-arch",
@@ -87,7 +103,9 @@
       "status": "completed",
       "version": "v0.1.0",
       "phase": "library",
-      "type": "Added"
+      "type": "Added",
+      "area": "providers",
+      "priority": "high"
     },
     {
       "id": "omnivault-aws",
@@ -95,7 +113,9 @@
       "status": "completed",
       "version": "v0.1.0",
       "phase": "library",
-      "type": "Added"
+      "type": "Added",
+      "area": "providers",
+      "priority": "medium"
     },
     {
       "id": "omnivault-keyring",
@@ -103,7 +123,9 @@
       "status": "completed",
       "version": "v0.1.0",
       "phase": "library",
-      "type": "Added"
+      "type": "Added",
+      "area": "providers",
+      "priority": "medium"
     },
     {
       "id": "crypto",
@@ -112,7 +134,9 @@
       "status": "completed",
       "version": "v0.2.0",
       "phase": "phase1",
-      "type": "Added"
+      "type": "Added",
+      "area": "security",
+      "priority": "high"
     },
     {
       "id": "encrypted-store",
@@ -121,7 +145,9 @@
       "status": "completed",
       "version": "v0.2.0",
       "phase": "phase1",
-      "type": "Added"
+      "type": "Added",
+      "area": "security",
+      "priority": "high"
     },
     {
       "id": "master-password",
@@ -129,7 +155,9 @@
       "status": "completed",
       "version": "v0.2.0",
       "phase": "phase1",
-      "type": "Added"
+      "type": "Added",
+      "area": "security",
+      "priority": "high"
     },
     {
       "id": "auto-lock",
@@ -137,7 +165,9 @@
       "status": "completed",
       "version": "v0.2.0",
       "phase": "phase1",
-      "type": "Added"
+      "type": "Added",
+      "area": "security",
+      "priority": "medium"
     },
     {
       "id": "paths",
@@ -146,7 +176,9 @@
       "status": "completed",
       "version": "v0.2.0",
       "phase": "phase2",
-      "type": "Added"
+      "type": "Added",
+      "area": "daemon",
+      "priority": "high"
     },
     {
       "id": "protocol",
@@ -155,7 +187,9 @@
       "status": "completed",
       "version": "v0.2.0",
       "phase": "phase2",
-      "type": "Added"
+      "type": "Added",
+      "area": "daemon",
+      "priority": "high"
     },
     {
       "id": "server",
@@ -164,7 +198,9 @@
       "status": "completed",
       "version": "v0.2.0",
       "phase": "phase2",
-      "type": "Added"
+      "type": "Added",
+      "area": "daemon",
+      "priority": "high"
     },
     {
       "id": "session-mgmt",
@@ -172,7 +208,9 @@
       "status": "completed",
       "version": "v0.2.0",
       "phase": "phase2",
-      "type": "Added"
+      "type": "Added",
+      "area": "daemon",
+      "priority": "high"
     },
     {
       "id": "cli-main",
@@ -181,7 +219,9 @@
       "status": "completed",
       "version": "v0.2.0",
       "phase": "phase3",
-      "type": "Added"
+      "type": "Added",
+      "area": "cli",
+      "priority": "high"
     },
     {
       "id": "cli-secrets",
@@ -190,7 +230,9 @@
       "status": "completed",
       "version": "v0.2.0",
       "phase": "phase3",
-      "type": "Added"
+      "type": "Added",
+      "area": "cli",
+      "priority": "high"
     },
     {
       "id": "cli-vault",
@@ -199,7 +241,9 @@
       "status": "completed",
       "version": "v0.2.0",
       "phase": "phase3",
-      "type": "Added"
+      "type": "Added",
+      "area": "cli",
+      "priority": "high"
     },
     {
       "id": "cli-daemon",
@@ -208,7 +252,9 @@
       "status": "completed",
       "version": "v0.2.0",
       "phase": "phase3",
-      "type": "Added"
+      "type": "Added",
+      "area": "cli",
+      "priority": "high"
     },
     {
       "id": "client",
@@ -217,21 +263,27 @@
       "status": "completed",
       "version": "v0.2.0",
       "phase": "phase4",
-      "type": "Added"
+      "type": "Added",
+      "area": "client",
+      "priority": "high"
     },
     {
       "id": "auto-start",
       "title": "Automatic daemon startup on first use",
       "status": "planned",
       "phase": "phase4",
-      "type": "Added"
+      "type": "Added",
+      "area": "client",
+      "priority": "medium"
     },
     {
       "id": "connection-pool",
       "title": "Connection pooling",
       "status": "planned",
       "phase": "phase4",
-      "type": "Added"
+      "type": "Added",
+      "area": "client",
+      "priority": "low"
     },
     {
       "id": "swift-models",
@@ -239,7 +291,9 @@
       "description": "`VaultModels.swift`",
       "status": "planned",
       "phase": "phase5",
-      "type": "Added"
+      "type": "Added",
+      "area": "ui",
+      "priority": "high"
     },
     {
       "id": "swift-client",
@@ -247,7 +301,9 @@
       "description": "`VaultDaemonClient.swift`",
       "status": "planned",
       "phase": "phase5",
-      "type": "Added"
+      "type": "Added",
+      "area": "ui",
+      "priority": "high"
     },
     {
       "id": "swift-manager",
@@ -255,7 +311,9 @@
       "description": "`VaultManager.swift`",
       "status": "planned",
       "phase": "phase5",
-      "type": "Added"
+      "type": "Added",
+      "area": "ui",
+      "priority": "high"
     },
     {
       "id": "swift-ui",
@@ -263,21 +321,27 @@
       "description": "`VaultView.swift`",
       "status": "planned",
       "phase": "phase5",
-      "type": "Added"
+      "type": "Added",
+      "area": "ui",
+      "priority": "high"
     },
     {
       "id": "swift-lock-ui",
       "title": "Lock/unlock UI",
       "status": "planned",
       "phase": "phase5",
-      "type": "Added"
+      "type": "Added",
+      "area": "ui",
+      "priority": "medium"
     },
     {
       "id": "swift-edit-ui",
       "title": "Add/edit secret UI",
       "status": "planned",
       "phase": "phase5",
-      "type": "Added"
+      "type": "Added",
+      "area": "ui",
+      "priority": "medium"
     }
   ],
 
