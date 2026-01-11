@@ -7,6 +7,17 @@
     {
       "version": "v0.2.0",
       "date": "2026-01-10",
+      "highlights": [
+        {
+          "description": "Full-featured CLI tool for local secret management"
+        },
+        {
+          "description": "AES-256-GCM encryption with Argon2id key derivation"
+        },
+        {
+          "description": "Daemon architecture with cross-platform support (macOS, Linux, Windows)"
+        }
+      ],
       "added": [
         {
           "description": "CLI tool (`cmd/omnivault`) for local secret management"
@@ -74,6 +85,17 @@
     {
       "version": "v0.1.0",
       "date": "2025-01-01",
+      "highlights": [
+        {
+          "description": "Unified Go library for secret management across multiple providers"
+        },
+        {
+          "description": "Extensible provider architecture with zero external dependencies"
+        },
+        {
+          "description": "URI-based secret resolution for multi-provider environments"
+        }
+      ],
       "added": [
         {
           "description": "Core `vault.Vault` interface for secret management"
