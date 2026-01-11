@@ -6,7 +6,6 @@ import (
 	"os"
 	"os/exec"
 	"strconv"
-	"syscall"
 
 	"github.com/agentplexus/omnivault/internal/client"
 	"github.com/agentplexus/omnivault/internal/config"
@@ -53,10 +52,8 @@ func daemonStart() error {
 	cmd.Stderr = nil
 	cmd.Stdin = nil
 
-	// Detach from parent process
-	cmd.SysProcAttr = &syscall.SysProcAttr{
-		Setpgid: true,
-	}
+	// Detach from parent process (platform-specific)
+	setSysProcAttr(cmd)
 
 	if err := cmd.Start(); err != nil {
 		return fmt.Errorf("failed to start daemon: %w", err)
@@ -145,18 +142,20 @@ func killDaemonByPID() error {
 		return fmt.Errorf("invalid PID file: %w", err)
 	}
 
-	process, err := os.FindProcess(pid)
-	if err != nil {
-		return fmt.Errorf("failed to find process: %w", err)
-	}
-
-	if err := process.Signal(syscall.SIGTERM); err != nil {
-		return fmt.Errorf("failed to send signal: %w", err)
+	if err := signalProcess(pid); err != nil {
+		return fmt.Errorf("failed to stop process: %w", err)
 	}
 
 	// Cleanup PID file
-	os.Remove(paths.PIDFile)
+	if err := os.Remove(paths.PIDFile); err != nil && !os.IsNotExist(err) {
+		return fmt.Errorf("failed to remove PID file: %w", err)
+	}
 
 	fmt.Println("Daemon stopped")
 	return nil
+}
+
+// findProcess is a helper to find a process by PID.
+func findProcess(pid int) (*os.Process, error) {
+	return os.FindProcess(pid)
 }

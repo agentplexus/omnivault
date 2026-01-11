@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"os"
 	"strings"
-	"syscall"
 
 	"github.com/agentplexus/omnivault/internal/client"
 	"golang.org/x/term"
@@ -59,9 +58,10 @@ func cmdSet(args []string) error {
 		// Prompt for value
 		fmt.Print("Enter secret value: ")
 		var err error
-		if term.IsTerminal(syscall.Stdin) {
+		fd := int(os.Stdin.Fd())
+		if term.IsTerminal(fd) {
 			// Read without echo for sensitive data
-			bytes, err := term.ReadPassword(syscall.Stdin)
+			bytes, err := term.ReadPassword(fd)
 			fmt.Println()
 			if err != nil {
 				return fmt.Errorf("failed to read value: %w", err)

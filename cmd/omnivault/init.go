@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"os"
 	"strings"
-	"syscall"
 
 	"github.com/agentplexus/omnivault/internal/client"
 	"golang.org/x/term"
@@ -151,9 +150,11 @@ func cmdStatus(_ []string) error {
 
 // readPassword reads a password from the terminal without echo.
 func readPassword() (string, error) {
+	fd := int(os.Stdin.Fd())
+
 	// Try to read without echo
-	if term.IsTerminal(syscall.Stdin) {
-		password, err := term.ReadPassword(syscall.Stdin)
+	if term.IsTerminal(fd) {
+		password, err := term.ReadPassword(fd)
 		fmt.Println() // Print newline after password
 		if err != nil {
 			return "", err
