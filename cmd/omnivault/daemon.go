@@ -64,8 +64,9 @@ func daemonStart() error {
 
 	fmt.Printf("Daemon started (PID: %d)\n", cmd.Process.Pid)
 
-	// Don't wait for the child process
-	go cmd.Wait()
+	// Don't wait for the child process - it's intentionally detached.
+	// The error from Wait() is not meaningful for a daemon we don't manage.
+	go func() { _ = cmd.Wait() }()
 
 	return nil
 }

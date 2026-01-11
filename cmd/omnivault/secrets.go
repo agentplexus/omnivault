@@ -59,9 +59,9 @@ func cmdSet(args []string) error {
 		// Prompt for value
 		fmt.Print("Enter secret value: ")
 		var err error
-		if term.IsTerminal(int(syscall.Stdin)) {
+		if term.IsTerminal(syscall.Stdin) {
 			// Read without echo for sensitive data
-			bytes, err := term.ReadPassword(int(syscall.Stdin))
+			bytes, err := term.ReadPassword(syscall.Stdin)
 			fmt.Println()
 			if err != nil {
 				return fmt.Errorf("failed to read value: %w", err)

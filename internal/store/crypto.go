@@ -25,10 +25,10 @@ type Argon2Params struct {
 // These are based on OWASP recommendations for password hashing.
 func DefaultArgon2Params() Argon2Params {
 	return Argon2Params{
-		Time:    3,      // 3 iterations
-		Memory:  65536,  // 64 MB
-		Threads: 4,      // 4 parallel threads
-		KeyLen:  32,     // 256-bit key for AES-256
+		Time:    3,     // 3 iterations
+		Memory:  65536, // 64 MB
+		Threads: 4,     // 4 parallel threads
+		KeyLen:  32,    // 256-bit key for AES-256
 	}
 }
 

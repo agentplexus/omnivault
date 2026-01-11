@@ -453,7 +453,9 @@ func (s *Server) handleStop(w http.ResponseWriter, r *http.Request) {
 	// Shutdown in background
 	go func() {
 		time.Sleep(100 * time.Millisecond)
-		s.Shutdown()
+		if err := s.Shutdown(); err != nil {
+			s.logger.Error("shutdown error", "error", err)
+		}
 		os.Exit(0)
 	}()
 }
@@ -479,14 +481,16 @@ func (s *Server) resetAutoLock() {
 // writePIDFile writes the daemon PID to a file.
 func (s *Server) writePIDFile() error {
 	pid := os.Getpid()
-	return os.WriteFile(s.paths.PIDFile, []byte(fmt.Sprintf("%d", pid)), 0644)
+	return os.WriteFile(s.paths.PIDFile, []byte(fmt.Sprintf("%d", pid)), 0600)
 }
 
 // writeJSON writes a JSON response.
 func (s *Server) writeJSON(w http.ResponseWriter, status int, data any) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(status)
-	json.NewEncoder(w).Encode(data)
+	if err := json.NewEncoder(w).Encode(data); err != nil {
+		s.logger.Error("failed to encode JSON response", "error", err)
+	}
 }
 
 // writeError writes an error response.

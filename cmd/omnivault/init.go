@@ -12,7 +12,7 @@ import (
 	"golang.org/x/term"
 )
 
-func cmdInit(args []string) error {
+func cmdInit(_ []string) error {
 	c := client.New()
 	ctx := context.Background()
 
@@ -62,7 +62,7 @@ func cmdInit(args []string) error {
 	return nil
 }
 
-func cmdUnlock(args []string) error {
+func cmdUnlock(_ []string) error {
 	c := client.New()
 	ctx := context.Background()
 
@@ -98,7 +98,7 @@ func cmdUnlock(args []string) error {
 	return nil
 }
 
-func cmdLock(args []string) error {
+func cmdLock(_ []string) error {
 	c := client.New()
 	ctx := context.Background()
 
@@ -114,7 +114,7 @@ func cmdLock(args []string) error {
 	return nil
 }
 
-func cmdStatus(args []string) error {
+func cmdStatus(_ []string) error {
 	c := client.New()
 	ctx := context.Background()
 
@@ -152,8 +152,8 @@ func cmdStatus(args []string) error {
 // readPassword reads a password from the terminal without echo.
 func readPassword() (string, error) {
 	// Try to read without echo
-	if term.IsTerminal(int(syscall.Stdin)) {
-		password, err := term.ReadPassword(int(syscall.Stdin))
+	if term.IsTerminal(syscall.Stdin) {
+		password, err := term.ReadPassword(syscall.Stdin)
 		fmt.Println() // Print newline after password
 		if err != nil {
 			return "", err
