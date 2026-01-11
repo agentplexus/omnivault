@@ -1,0 +1,390 @@
+{
+  "ir_version": "1.0",
+  "project": "OmniVault",
+  "repository": "https://github.com/agentplexus/omnivault",
+  "generated_at": "2026-01-10T00:00:00Z",
+
+  "legend": {
+    "completed": {"emoji": "✅", "description": "Completed"},
+    "in_progress": {"emoji": "🚧", "description": "In Progress"},
+    "planned": {"emoji": "📋", "description": "Planned"},
+    "future": {"emoji": "💡", "description": "Under Consideration"}
+  },
+
+  "phases": [
+    {
+      "id": "library",
+      "name": "Library Foundation",
+      "status": "completed",
+      "order": 0,
+      "description": "Core Go library for secret management"
+    },
+    {
+      "id": "phase1",
+      "name": "Phase 1: Encrypted Local Store",
+      "status": "completed",
+      "order": 1,
+      "description": "Encrypted file-based storage for secure local secrets"
+    },
+    {
+      "id": "phase2",
+      "name": "Phase 2: Daemon",
+      "status": "completed",
+      "order": 2,
+      "description": "Background service for secure secret access"
+    },
+    {
+      "id": "phase3",
+      "name": "Phase 3: CLI",
+      "status": "completed",
+      "order": 3,
+      "description": "Command-line interface for vault management"
+    },
+    {
+      "id": "phase4",
+      "name": "Phase 4: Daemon Client Library",
+      "status": "completed",
+      "order": 4,
+      "description": "Go client for daemon IPC communication"
+    },
+    {
+      "id": "phase5",
+      "name": "Phase 5: PlexusDesktop Integration",
+      "status": "planned",
+      "order": 5,
+      "description": "Swift UI for OmniVault in PlexusDesktop"
+    }
+  ],
+
+  "items": [
+    {
+      "id": "vault-interface",
+      "title": "Core `vault.Vault` interface",
+      "status": "completed",
+      "version": "v0.1.0",
+      "phase": "library",
+      "type": "Added"
+    },
+    {
+      "id": "builtin-providers",
+      "title": "Built-in providers (env, file, memory)",
+      "status": "completed",
+      "version": "v0.1.0",
+      "phase": "library",
+      "type": "Added"
+    },
+    {
+      "id": "uri-resolver",
+      "title": "URI-based resolver",
+      "status": "completed",
+      "version": "v0.1.0",
+      "phase": "library",
+      "type": "Added"
+    },
+    {
+      "id": "provider-arch",
+      "title": "External provider module architecture",
+      "status": "completed",
+      "version": "v0.1.0",
+      "phase": "library",
+      "type": "Added"
+    },
+    {
+      "id": "omnivault-aws",
+      "title": "omnivault-aws provider module",
+      "status": "completed",
+      "version": "v0.1.0",
+      "phase": "library",
+      "type": "Added"
+    },
+    {
+      "id": "omnivault-keyring",
+      "title": "omnivault-keyring provider module",
+      "status": "completed",
+      "version": "v0.1.0",
+      "phase": "library",
+      "type": "Added"
+    },
+    {
+      "id": "crypto",
+      "title": "AES-256-GCM encryption with Argon2id key derivation",
+      "description": "`internal/store/crypto.go`",
+      "status": "completed",
+      "version": "v0.2.0",
+      "phase": "phase1",
+      "type": "Added"
+    },
+    {
+      "id": "encrypted-store",
+      "title": "Encrypted file store implementing `vault.Vault`",
+      "description": "`internal/store/encrypted.go`",
+      "status": "completed",
+      "version": "v0.2.0",
+      "phase": "phase1",
+      "type": "Added"
+    },
+    {
+      "id": "master-password",
+      "title": "Master password protection",
+      "status": "completed",
+      "version": "v0.2.0",
+      "phase": "phase1",
+      "type": "Added"
+    },
+    {
+      "id": "auto-lock",
+      "title": "Configurable auto-lock timeout",
+      "status": "completed",
+      "version": "v0.2.0",
+      "phase": "phase1",
+      "type": "Added"
+    },
+    {
+      "id": "paths",
+      "title": "Platform-specific paths (~/.omnivault/)",
+      "description": "`internal/config/paths.go`",
+      "status": "completed",
+      "version": "v0.2.0",
+      "phase": "phase2",
+      "type": "Added"
+    },
+    {
+      "id": "protocol",
+      "title": "IPC protocol definitions",
+      "description": "`internal/daemon/protocol.go`",
+      "status": "completed",
+      "version": "v0.2.0",
+      "phase": "phase2",
+      "type": "Added"
+    },
+    {
+      "id": "server",
+      "title": "HTTP server over Unix socket",
+      "description": "`internal/daemon/server.go`",
+      "status": "completed",
+      "version": "v0.2.0",
+      "phase": "phase2",
+      "type": "Added"
+    },
+    {
+      "id": "session-mgmt",
+      "title": "Lock/unlock session management",
+      "status": "completed",
+      "version": "v0.2.0",
+      "phase": "phase2",
+      "type": "Added"
+    },
+    {
+      "id": "cli-main",
+      "title": "CLI entrypoint",
+      "description": "`cmd/omnivault/main.go`",
+      "status": "completed",
+      "version": "v0.2.0",
+      "phase": "phase3",
+      "type": "Added"
+    },
+    {
+      "id": "cli-secrets",
+      "title": "Secret commands (get, set, list, delete)",
+      "description": "`cmd/omnivault/secrets.go`",
+      "status": "completed",
+      "version": "v0.2.0",
+      "phase": "phase3",
+      "type": "Added"
+    },
+    {
+      "id": "cli-vault",
+      "title": "Vault commands (init, lock, unlock, status)",
+      "description": "`cmd/omnivault/init.go`",
+      "status": "completed",
+      "version": "v0.2.0",
+      "phase": "phase3",
+      "type": "Added"
+    },
+    {
+      "id": "cli-daemon",
+      "title": "Daemon control commands",
+      "description": "`cmd/omnivault/daemon.go`",
+      "status": "completed",
+      "version": "v0.2.0",
+      "phase": "phase3",
+      "type": "Added"
+    },
+    {
+      "id": "client",
+      "title": "Unix socket client",
+      "description": "`internal/client/client.go`",
+      "status": "completed",
+      "version": "v0.2.0",
+      "phase": "phase4",
+      "type": "Added"
+    },
+    {
+      "id": "auto-start",
+      "title": "Automatic daemon startup on first use",
+      "status": "planned",
+      "phase": "phase4",
+      "type": "Added"
+    },
+    {
+      "id": "connection-pool",
+      "title": "Connection pooling",
+      "status": "planned",
+      "phase": "phase4",
+      "type": "Added"
+    },
+    {
+      "id": "swift-models",
+      "title": "Swift models for secret info and vault status",
+      "description": "`VaultModels.swift`",
+      "status": "planned",
+      "phase": "phase5",
+      "type": "Added"
+    },
+    {
+      "id": "swift-client",
+      "title": "Swift Unix socket client",
+      "description": "`VaultDaemonClient.swift`",
+      "status": "planned",
+      "phase": "phase5",
+      "type": "Added"
+    },
+    {
+      "id": "swift-manager",
+      "title": "Swift state management",
+      "description": "`VaultManager.swift`",
+      "status": "planned",
+      "phase": "phase5",
+      "type": "Added"
+    },
+    {
+      "id": "swift-ui",
+      "title": "Secret list UI",
+      "description": "`VaultView.swift`",
+      "status": "planned",
+      "phase": "phase5",
+      "type": "Added"
+    },
+    {
+      "id": "swift-lock-ui",
+      "title": "Lock/unlock UI",
+      "status": "planned",
+      "phase": "phase5",
+      "type": "Added"
+    },
+    {
+      "id": "swift-edit-ui",
+      "title": "Add/edit secret UI",
+      "status": "planned",
+      "phase": "phase5",
+      "type": "Added"
+    }
+  ],
+
+  "sections": [
+    {
+      "id": "overview",
+      "title": "Overview",
+      "order": 1,
+      "content": [
+        {"type": "text", "value": "OmniVault is a unified Go library for secret management. This roadmap covers the evolution from a library to a complete local secret management solution with daemon and CLI."}
+      ]
+    },
+    {
+      "id": "daemon-api",
+      "title": "Daemon API",
+      "order": 20,
+      "content": [
+        {
+          "type": "table",
+          "headers": ["Endpoint", "Method", "Description"],
+          "rows": [
+            ["`/status`", "GET", "Daemon status (running, locked, secret count)"],
+            ["`/secrets`", "GET", "List all secrets (metadata only)"],
+            ["`/secret/:path`", "GET", "Get secret value"],
+            ["`/secret/:path`", "PUT", "Set secret"],
+            ["`/secret/:path`", "DELETE", "Delete secret"],
+            ["`/lock`", "POST", "Lock the vault"],
+            ["`/unlock`", "POST", "Unlock with master password"]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "socket-path",
+      "title": "Socket Path",
+      "order": 21,
+      "content": [
+        {
+          "type": "table",
+          "headers": ["Platform", "Path"],
+          "rows": [
+            ["macOS/Linux", "`~/.omnivault/omnivaultd.sock`"],
+            ["Windows", "`\\\\.\\pipe\\omnivault`"]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cli-commands",
+      "title": "CLI Commands",
+      "order": 30,
+      "content": [
+        {
+          "type": "code",
+          "language": "bash",
+          "value": "# Vault initialization\nomnivault init                    # Initialize new vault with master password\n\n# Secret operations\nomnivault set <path> [value]      # Set secret (prompts if no value)\nomnivault get <path>              # Get secret value\nomnivault list [prefix]           # List secrets\nomnivault delete <path>           # Delete secret\n\n# Vault control\nomnivault lock                    # Lock the vault\nomnivault unlock                  # Unlock with master password\nomnivault status                  # Show vault status\n\n# Daemon control\nomnivault daemon start            # Start daemon\nomnivault daemon stop             # Stop daemon\nomnivault daemon status           # Daemon status"
+        }
+      ]
+    },
+    {
+      "id": "security",
+      "title": "Security Model",
+      "order": 40,
+      "content": [
+        {"type": "text", "value": "### Encryption"},
+        {"type": "list", "items": [
+          "**Algorithm**: AES-256-GCM (authenticated encryption)",
+          "**Key Derivation**: Argon2id (memory-hard, resistant to GPU attacks)",
+          "**Salt**: Random 32 bytes per vault",
+          "**Nonce**: Random 12 bytes per secret"
+        ]},
+        {"type": "text", "value": "### Master Password"},
+        {"type": "list", "items": [
+          "Never stored, only used to derive encryption key",
+          "Minimum 8 characters enforced",
+          "Session-based unlock with configurable timeout"
+        ]},
+        {"type": "text", "value": "### Storage"},
+        {"type": "list", "items": [
+          "Encrypted vault file: `~/.omnivault/vault.enc`",
+          "Metadata stored separately: `~/.omnivault/vault.meta`",
+          "No plaintext secrets on disk"
+        ]}
+      ]
+    },
+    {
+      "id": "data-format",
+      "title": "Data Format",
+      "order": 50,
+      "content": [
+        {"type": "text", "value": "### Vault File Structure"},
+        {
+          "type": "code",
+          "value": "~/.omnivault/\n├── vault.enc           # Encrypted secrets (AES-256-GCM)\n├── vault.meta          # Unencrypted metadata (salt, created date)\n├── omnivaultd.sock     # Unix socket (runtime)\n└── omnivaultd.pid      # Daemon PID file (runtime)"
+        },
+        {"type": "text", "value": "### Secret Metadata (in vault.meta)"},
+        {
+          "type": "code",
+          "language": "json",
+          "value": "{\n  \"version\": 1,\n  \"created_at\": \"2024-01-01T00:00:00Z\",\n  \"salt\": \"base64-encoded-salt\",\n  \"argon2_params\": {\n    \"time\": 3,\n    \"memory\": 65536,\n    \"threads\": 4\n  }\n}"
+        }
+      ]
+    }
+  ],
+
+  "version_history": [
+    {"version": "v0.2.0", "date": "2026-01-10", "status": "completed", "summary": "CLI, daemon, encrypted store"},
+    {"version": "v0.1.0", "date": "2025-01-01", "status": "completed", "summary": "Core library with providers"}
+  ]
+}
