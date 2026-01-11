@@ -1293,7 +1293,7 @@
 <a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>                                     └──────────────┘
 </code></pre></div>
 <ol>
-<li>CLI sends commands to daemon via Unix socket</li>
+<li>CLI sends commands to daemon via Unix socket (macOS/Linux) or TCP (Windows)</li>
 <li>Daemon holds encryption key in memory</li>
 <li>Daemon performs all cryptographic operations</li>
 <li>Files on disk are always encrypted</li>
@@ -1468,14 +1468,47 @@
 <ul>
 <li>Uses Unix socket at <code>~/.omnivault/omnivaultd.sock</code></li>
 <li>Standard Unix permissions apply</li>
-<li>Process daemonization via fork</li>
+<li>Process daemonization via <code>Setpgid</code></li>
+<li>Graceful shutdown via SIGTERM</li>
 </ul>
 <h3 id="windows">Windows<a class="headerlink" href="#windows" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Currently uses TCP on localhost (temporary)</li>
-<li>Named pipe support planned</li>
-<li>Process started with <code>Setpgid</code></li>
+<li>Uses TCP on <code>127.0.0.1:19839</code></li>
+<li>Vault files stored in <code>%LOCALAPPDATA%\OmniVault\</code></li>
+<li>Process termination via <code>Process.Kill()</code></li>
+<li>No socket file (TCP-based IPC)</li>
 </ul>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>macOS/Linux</th>
+<th>Windows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>IPC</td>
+<td>Unix Socket</td>
+<td>TCP localhost</td>
+</tr>
+<tr>
+<td>Address</td>
+<td><code>~/.omnivault/omnivaultd.sock</code></td>
+<td><code>127.0.0.1:19839</code></td>
+</tr>
+<tr>
+<td>Config Dir</td>
+<td><code>~/.omnivault/</code></td>
+<td><code>%LOCALAPPDATA%\OmniVault\</code></td>
+</tr>
+<tr>
+<td>Shutdown</td>
+<td>SIGTERM</td>
+<td>Process.Kill()</td>
+</tr>
+</tbody>
+</table>
 <h2 id="debugging">Debugging<a class="headerlink" href="#debugging" title="Permanent link">&para;</a></h2>
 <p>Run the daemon in foreground to see logs:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>omnivault<span class="w"> </span>daemon<span class="w"> </span>run
