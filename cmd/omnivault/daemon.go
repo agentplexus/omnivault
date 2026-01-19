@@ -10,6 +10,7 @@ import (
 	"github.com/agentplexus/omnivault/internal/client"
 	"github.com/agentplexus/omnivault/internal/config"
 	"github.com/agentplexus/omnivault/internal/daemon"
+	"github.com/grokify/oscompat/process"
 )
 
 func cmdDaemon(args []string) error {
@@ -52,8 +53,8 @@ func daemonStart() error {
 	cmd.Stderr = nil
 	cmd.Stdin = nil
 
-	// Detach from parent process (platform-specific)
-	setSysProcAttr(cmd)
+	// Detach from parent process (cross-platform via oscompat)
+	process.SetDetached(cmd)
 
 	if err := cmd.Start(); err != nil {
 		return fmt.Errorf("failed to start daemon: %w", err)
@@ -142,7 +143,7 @@ func killDaemonByPID() error {
 		return fmt.Errorf("invalid PID file: %w", err)
 	}
 
-	if err := signalProcess(pid); err != nil {
+	if err := process.Signal(pid); err != nil {
 		return fmt.Errorf("failed to stop process: %w", err)
 	}
 
@@ -153,9 +154,4 @@ func killDaemonByPID() error {
 
 	fmt.Println("Daemon stopped")
 	return nil
-}
-
-// findProcess is a helper to find a process by PID.
-func findProcess(pid int) (*os.Process, error) {
-	return os.FindProcess(pid)
 }
