@@ -7,6 +7,33 @@
   "unreleased": {},
   "releases": [
     {
+      "version": "v0.2.1",
+      "date": "2026-01-18",
+      "highlights": [
+        {
+          "description": "Cross-platform daemon code refactored to use oscompat library"
+        }
+      ],
+      "changed": [
+        {
+          "description": "Replace platform-specific daemon code with `github.com/grokify/oscompat` library",
+          "commit": "61da315"
+        },
+        {
+          "description": "Go version updated to 1.25.5",
+          "commit": "61da315"
+        },
+        {
+          "description": "Update CI workflow Go versions",
+          "commit": "6b6f0e6"
+        },
+        {
+          "description": "Bump `golang.org/x/crypto` from 0.46.0 to 0.47.0",
+          "commit": "f13bde7"
+        }
+      ]
+    },
+    {
       "version": "v0.2.0",
       "date": "2026-01-10",
       "highlights": [
