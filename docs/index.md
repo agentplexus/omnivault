@@ -1,10 +1,5 @@
 # OmniVault
 
-[![Build Status](https://github.com/plexusone/omnivault/actions/workflows/ci.yaml/badge.svg?branch=main)](https://github.com/plexusone/omnivault/actions/workflows/ci.yaml)
-[![Go Report Card](https://goreportcard.com/badge/github.com/plexusone/omnivault)](https://goreportcard.com/report/github.com/plexusone/omnivault)
-[![GoDoc](https://pkg.go.dev/badge/github.com/plexusone/omnivault)](https://pkg.go.dev/github.com/plexusone/omnivault)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/plexusone/omnivault/blob/master/LICENSE)
-
 OmniVault is a unified Go library for secret management across multiple providers. It provides a single interface for accessing secrets from password managers, cloud secret managers, enterprise vaults, and local storage.
 
 ## Features
