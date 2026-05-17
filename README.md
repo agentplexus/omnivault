@@ -23,7 +23,7 @@
  [loc-svg]: https://tokei.rs/b1/github/plexusone/omnivault
  [repo-url]: https://github.com/plexusone/omnivault
  [license-svg]: https://img.shields.io/badge/license-MIT-blue.svg
- [license-url]: https://github.com/plexusone/omnivault/blob/master/LICENSE
+ [license-url]: https://github.com/plexusone/omnivault/blob/main/LICENSE
 
 OmniVault is a unified Go library for secret management across multiple providers. It provides a single interface for accessing secrets from password managers, cloud secret managers, enterprise vaults, and local storage.
 
