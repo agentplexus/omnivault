@@ -139,25 +139,7 @@ func cmdSearch(args []string) error {
 	}
 
 	out := NewOutputWriterFromFlags(flags)
-
-	switch out.format {
-	case FormatJSON, FormatYAML:
-		if out.format == FormatJSON {
-			return out.writeJSON(resp)
-		}
-		return out.writeYAML(resp)
-	default:
-		if resp.Count == 0 {
-			fmt.Println("No secrets found matching pattern")
-			return nil
-		}
-
-		for _, path := range resp.Paths {
-			fmt.Println(path)
-		}
-		fmt.Printf("\n%d secret(s) found\n", resp.Count)
-		return nil
-	}
+	return out.WriteSearch(resp)
 }
 
 func cmdDelete(args []string) error {
