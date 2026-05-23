@@ -44,6 +44,46 @@ omnivault get database/password
 
 [Get started with the CLI →](cli/quickstart.md)
 
+## CLI Highlights (v0.5.0)
+
+The CLI includes powerful features for managing secrets:
+
+=== "Output Formats"
+
+    Get secrets in multiple formats:
+
+    ```bash
+    omnivault get api/key --format json
+    omnivault get api/key --format yaml
+    omnivault get api/key --format shell
+    ```
+
+=== "Field Extraction"
+
+    Extract specific fields:
+
+    ```bash
+    omnivault get database/creds --field password
+    ```
+
+=== "Search"
+
+    Find secrets by pattern:
+
+    ```bash
+    omnivault search "database/*"
+    omnivault search ".*prod.*" --regex
+    ```
+
+=== "Import/Export"
+
+    Backup and restore secrets:
+
+    ```bash
+    omnivault export --output backup.json
+    omnivault import backup.json --merge
+    ```
+
 ## Quick Links
 
 | Section | Description |
@@ -51,6 +91,8 @@ omnivault get database/password
 | [Installation](installation.md) | Install the library or CLI |
 | [Library Quick Start](library/quickstart.md) | Get started with the Go library |
 | [CLI Quick Start](cli/quickstart.md) | Get started with the CLI |
+| [CLI Commands](cli/commands.md) | Complete command reference |
+| [Configuration](cli/configuration.md) | Configure CLI behavior |
 | [Providers](library/providers.md) | Available secret providers |
 | [Security](cli/security.md) | CLI security model |
 | [Changelog](changelog.md) | Release history |

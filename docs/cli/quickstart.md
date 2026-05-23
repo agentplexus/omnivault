@@ -107,9 +107,84 @@ Secrets: 5
 Unlocked at: 2024-01-15 10:30:00
 ```
 
+## Output Formats
+
+Get secrets in different formats:
+
+```bash
+# Default text output
+omnivault get database/credentials
+
+# JSON output
+omnivault get database/credentials --format json
+
+# YAML output
+omnivault get database/credentials --format yaml
+
+# Shell-sourceable output
+omnivault get aws/keys --format shell
+```
+
+Source secrets directly into your shell:
+
+```bash
+eval $(omnivault get aws/keys --format shell)
+echo $AWS_KEYS_ACCESS_KEY
+```
+
+## Field Extraction
+
+Extract specific fields from multi-field secrets:
+
+```bash
+# Get only the password field
+omnivault get database/credentials --field password
+
+# Use in scripts
+DB_PASS=$(omnivault get database/credentials --field password)
+```
+
+## Search Secrets
+
+Find secrets by pattern:
+
+```bash
+# Glob pattern
+omnivault search "database/*"
+omnivault search "*password*"
+
+# Regex pattern
+omnivault search ".*prod.*" --regex
+```
+
+## Backup and Restore
+
+Export and import secrets for backup:
+
+```bash
+# Export all secrets
+omnivault export --output backup.json
+
+# Import secrets
+omnivault import backup.json
+
+# Import without overwriting existing
+omnivault import backup.json --merge
+```
+
+## Change Password
+
+Change your master password:
+
+```bash
+omnivault passwd
+```
+
+All secrets are automatically re-encrypted with the new password.
+
 ## Auto-Lock
 
-The vault automatically locks after 15 minutes of inactivity. Each secret operation resets the timer.
+The vault automatically locks after 15 minutes of inactivity. Each secret operation resets the timer. You can customize this in the [configuration file](configuration.md).
 
 ## Daemon Management
 
@@ -146,5 +221,6 @@ omnivault lock
 ## Next Steps
 
 - [Commands Reference](commands.md) - All CLI commands
+- [Configuration](configuration.md) - Customize CLI behavior
 - [Daemon Architecture](daemon.md) - How the daemon works
 - [Security Model](security.md) - Encryption and security details
