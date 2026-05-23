@@ -6,6 +6,71 @@
   "commitConvention": "conventional",
   "releases": [
     {
+      "version": "v0.5.0",
+      "date": "2026-05-23",
+      "highlights": [
+        {
+          "description": "Major CLI enhancement with password change, output formats, search, and import/export"
+        }
+      ],
+      "added": [
+        {
+          "description": "Password change command (`passwd`) with automatic secret re-encryption",
+          "commit": "eb8cadb"
+        },
+        {
+          "description": "Output format support (`--format`) for text, JSON, YAML, and shell-sourceable output",
+          "commit": "3c5e1c5"
+        },
+        {
+          "description": "Field extraction (`--field`) to retrieve specific fields from secrets",
+          "commit": "eb8cadb"
+        },
+        {
+          "description": "Search command with glob and regex pattern matching",
+          "commit": "7907e88"
+        },
+        {
+          "description": "Batch export command to export secrets as JSON",
+          "commit": "ceb8bbf"
+        },
+        {
+          "description": "Batch import command with merge mode to skip existing secrets",
+          "commit": "ceb8bbf"
+        },
+        {
+          "description": "List metadata flag (`--metadata`) to show timestamps and full tags",
+          "commit": "eb8cadb"
+        },
+        {
+          "description": "Expiry warnings for secrets approaching or past expiration",
+          "commit": "3c5e1c5"
+        },
+        {
+          "description": "User configuration file support (`~/.omnivault/config.json`)",
+          "commit": "3499f93"
+        },
+        {
+          "description": "Flag parsing infrastructure for consistent CLI argument handling",
+          "commit": "9048676"
+        },
+        {
+          "description": "Daemon endpoints: `/password`, `/search`, `/export`, `/import`",
+          "commit": "7907e88"
+        },
+        {
+          "description": "Integration tests for password change, search, and import/export",
+          "commit": "b4f91e1"
+        }
+      ],
+      "changed": [
+        {
+          "description": "Add `gopkg.in/yaml.v3` v3.0.1 for YAML output support",
+          "commit": "8ea7127"
+        }
+      ]
+    },
+    {
       "version": "v0.4.0",
       "date": "2026-05-23",
       "highlights": [
