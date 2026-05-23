@@ -17,6 +17,10 @@
          <lastmod>2026-05-23</lastmod>
     </url>
     <url>
+         <loc>https://plexusone.github.io/omnivault/cli/configuration/</loc>
+         <lastmod>2026-05-23</lastmod>
+    </url>
+    <url>
          <loc>https://plexusone.github.io/omnivault/cli/daemon/</loc>
          <lastmod>2026-05-23</lastmod>
     </url>
@@ -66,6 +70,10 @@
     </url>
     <url>
          <loc>https://plexusone.github.io/omnivault/releases/v0.4.0/</loc>
+         <lastmod>2026-05-23</lastmod>
+    </url>
+    <url>
+         <loc>https://plexusone.github.io/omnivault/releases/v0.5.0/</loc>
          <lastmod>2026-05-23</lastmod>
     </url>
 </urlset>

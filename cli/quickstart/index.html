@@ -692,6 +692,51 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#output-formats" class="md-nav__link">
+    <span class="md-ellipsis">
+      Output Formats
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#field-extraction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Field Extraction
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#search-secrets" class="md-nav__link">
+    <span class="md-ellipsis">
+      Search Secrets
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#backup-and-restore" class="md-nav__link">
+    <span class="md-ellipsis">
+      Backup and Restore
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#change-password" class="md-nav__link">
+    <span class="md-ellipsis">
+      Change Password
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#auto-lock" class="md-nav__link">
     <span class="md-ellipsis">
       Auto-Lock
@@ -749,6 +794,29 @@
   
   <span class="md-ellipsis">
     Commands
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Configuration
     
   </span>
   
@@ -856,6 +924,29 @@
             Releases
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../releases/v0.5.0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    v0.5.0
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
             
               
                 
@@ -1148,6 +1239,51 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#output-formats" class="md-nav__link">
+    <span class="md-ellipsis">
+      Output Formats
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#field-extraction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Field Extraction
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#search-secrets" class="md-nav__link">
+    <span class="md-ellipsis">
+      Search Secrets
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#backup-and-restore" class="md-nav__link">
+    <span class="md-ellipsis">
+      Backup and Restore
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#change-password" class="md-nav__link">
+    <span class="md-ellipsis">
+      Change Password
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#auto-lock" class="md-nav__link">
     <span class="md-ellipsis">
       Auto-Lock
@@ -1265,37 +1401,89 @@
 <a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>Secrets: 5
 <a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>Unlocked at: 2024-01-15 10:30:00
 </code></pre></div>
-<h2 id="auto-lock">Auto-Lock<a class="headerlink" href="#auto-lock" title="Permanent link">&para;</a></h2>
-<p>The vault automatically locks after 15 minutes of inactivity. Each secret operation resets the timer.</p>
-<h2 id="daemon-management">Daemon Management<a class="headerlink" href="#daemon-management" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="c1"># Start daemon in background</span>
-<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>omnivault<span class="w"> </span>daemon<span class="w"> </span>start
+<h2 id="output-formats">Output Formats<a class="headerlink" href="#output-formats" title="Permanent link">&para;</a></h2>
+<p>Get secrets in different formats:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="c1"># Default text output</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>omnivault<span class="w"> </span>get<span class="w"> </span>database/credentials
 <a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>
-<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="c1"># Stop the daemon</span>
-<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>omnivault<span class="w"> </span>daemon<span class="w"> </span>stop
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="c1"># JSON output</span>
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>omnivault<span class="w"> </span>get<span class="w"> </span>database/credentials<span class="w"> </span>--format<span class="w"> </span>json
 <a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>
-<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="c1"># Check daemon status</span>
-<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>omnivault<span class="w"> </span>daemon<span class="w"> </span>status
+<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="c1"># YAML output</span>
+<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>omnivault<span class="w"> </span>get<span class="w"> </span>database/credentials<span class="w"> </span>--format<span class="w"> </span>yaml
 <a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a>
-<a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a><span class="c1"># Run in foreground (for debugging)</span>
-<a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a>omnivault<span class="w"> </span>daemon<span class="w"> </span>run
+<a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a><span class="c1"># Shell-sourceable output</span>
+<a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a>omnivault<span class="w"> </span>get<span class="w"> </span>aws/keys<span class="w"> </span>--format<span class="w"> </span>shell
+</code></pre></div>
+<p>Source secrets directly into your shell:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="nb">eval</span><span class="w"> </span><span class="k">$(</span>omnivault<span class="w"> </span>get<span class="w"> </span>aws/keys<span class="w"> </span>--format<span class="w"> </span>shell<span class="k">)</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="nb">echo</span><span class="w"> </span><span class="nv">$AWS_KEYS_ACCESS_KEY</span>
+</code></pre></div>
+<h2 id="field-extraction">Field Extraction<a class="headerlink" href="#field-extraction" title="Permanent link">&para;</a></h2>
+<p>Extract specific fields from multi-field secrets:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="c1"># Get only the password field</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>omnivault<span class="w"> </span>get<span class="w"> </span>database/credentials<span class="w"> </span>--field<span class="w"> </span>password
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="c1"># Use in scripts</span>
+<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a><span class="nv">DB_PASS</span><span class="o">=</span><span class="k">$(</span>omnivault<span class="w"> </span>get<span class="w"> </span>database/credentials<span class="w"> </span>--field<span class="w"> </span>password<span class="k">)</span>
+</code></pre></div>
+<h2 id="search-secrets">Search Secrets<a class="headerlink" href="#search-secrets" title="Permanent link">&para;</a></h2>
+<p>Find secrets by pattern:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="c1"># Glob pattern</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>omnivault<span class="w"> </span>search<span class="w"> </span><span class="s2">&quot;database/*&quot;</span>
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>omnivault<span class="w"> </span>search<span class="w"> </span><span class="s2">&quot;*password*&quot;</span>
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>
+<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="c1"># Regex pattern</span>
+<a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a>omnivault<span class="w"> </span>search<span class="w"> </span><span class="s2">&quot;.*prod.*&quot;</span><span class="w"> </span>--regex
+</code></pre></div>
+<h2 id="backup-and-restore">Backup and Restore<a class="headerlink" href="#backup-and-restore" title="Permanent link">&para;</a></h2>
+<p>Export and import secrets for backup:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="c1"># Export all secrets</span>
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>omnivault<span class="w"> </span><span class="nb">export</span><span class="w"> </span>--output<span class="w"> </span>backup.json
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="c1"># Import secrets</span>
+<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>omnivault<span class="w"> </span>import<span class="w"> </span>backup.json
+<a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a>
+<a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a><span class="c1"># Import without overwriting existing</span>
+<a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a>omnivault<span class="w"> </span>import<span class="w"> </span>backup.json<span class="w"> </span>--merge
+</code></pre></div>
+<h2 id="change-password">Change Password<a class="headerlink" href="#change-password" title="Permanent link">&para;</a></h2>
+<p>Change your master password:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>omnivault<span class="w"> </span>passwd
+</code></pre></div>
+<p>All secrets are automatically re-encrypted with the new password.</p>
+<h2 id="auto-lock">Auto-Lock<a class="headerlink" href="#auto-lock" title="Permanent link">&para;</a></h2>
+<p>The vault automatically locks after 15 minutes of inactivity. Each secret operation resets the timer. You can customize this in the <a href="../configuration/">configuration file</a>.</p>
+<h2 id="daemon-management">Daemon Management<a class="headerlink" href="#daemon-management" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="c1"># Start daemon in background</span>
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>omnivault<span class="w"> </span>daemon<span class="w"> </span>start
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>
+<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="c1"># Stop the daemon</span>
+<a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a>omnivault<span class="w"> </span>daemon<span class="w"> </span>stop
+<a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a>
+<a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a><span class="c1"># Check daemon status</span>
+<a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a>omnivault<span class="w"> </span>daemon<span class="w"> </span>status
+<a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a>
+<a id="__codelineno-18-10" name="__codelineno-18-10" href="#__codelineno-18-10"></a><span class="c1"># Run in foreground (for debugging)</span>
+<a id="__codelineno-18-11" name="__codelineno-18-11" href="#__codelineno-18-11"></a>omnivault<span class="w"> </span>daemon<span class="w"> </span>run
 </code></pre></div>
 <h2 id="typical-workflow">Typical Workflow<a class="headerlink" href="#typical-workflow" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="c1"># First time setup</span>
-<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>omnivault<span class="w"> </span>daemon<span class="w"> </span>start
-<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>omnivault<span class="w"> </span>init
-<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>
-<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="c1"># Daily usage</span>
-<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>omnivault<span class="w"> </span>unlock
-<a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>omnivault<span class="w"> </span>get<span class="w"> </span>my/secret
-<a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a><span class="c1"># ... work ...</span>
-<a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a>omnivault<span class="w"> </span>lock
-<a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a>
-<a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a><span class="c1"># Or let auto-lock handle it</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="c1"># First time setup</span>
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>omnivault<span class="w"> </span>daemon<span class="w"> </span>start
+<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>omnivault<span class="w"> </span>init
+<a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a>
+<a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a><span class="c1"># Daily usage</span>
+<a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a>omnivault<span class="w"> </span>unlock
+<a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a>omnivault<span class="w"> </span>get<span class="w"> </span>my/secret
+<a id="__codelineno-19-8" name="__codelineno-19-8" href="#__codelineno-19-8"></a><span class="c1"># ... work ...</span>
+<a id="__codelineno-19-9" name="__codelineno-19-9" href="#__codelineno-19-9"></a>omnivault<span class="w"> </span>lock
+<a id="__codelineno-19-10" name="__codelineno-19-10" href="#__codelineno-19-10"></a>
+<a id="__codelineno-19-11" name="__codelineno-19-11" href="#__codelineno-19-11"></a><span class="c1"># Or let auto-lock handle it</span>
 </code></pre></div>
 <h2 id="next-steps">Next Steps<a class="headerlink" href="#next-steps" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="../commands/">Commands Reference</a> - All CLI commands</li>
+<li><a href="../configuration/">Configuration</a> - Customize CLI behavior</li>
 <li><a href="../daemon/">Daemon Architecture</a> - How the daemon works</li>
 <li><a href="../security/">Security Model</a> - Encryption and security details</li>
 </ul>
