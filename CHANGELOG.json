@@ -16,23 +16,23 @@
       "added": [
         {
           "description": "Provider registry with `RegisterProvider`/`UnregisterProvider` for scheme-based provider factories",
-          "commit": "ba54e72"
+          "commit": "9c9a579"
         },
         {
           "description": "`VaultFromURI` function to create vaults from URI strings (e.g., `file:///path`, `env://PREFIX_`)",
-          "commit": "ba54e72"
+          "commit": "9c9a579"
         },
         {
           "description": "`RegisteredSchemes` function to query all registered URI schemes",
-          "commit": "ba54e72"
+          "commit": "9c9a579"
         },
         {
           "description": "Built-in factories for `memory://`, `file://`, and `env://` schemes",
-          "commit": "ba54e72"
+          "commit": "9c9a579"
         },
         {
           "description": "Support for external providers to self-register via `init()` imports",
-          "commit": "ba54e72"
+          "commit": "9c9a579"
         },
         {
           "description": "PlexusOne unified navigation and theme for MkDocs",
