@@ -113,13 +113,15 @@ func cmdLock(_ []string) error {
 	return nil
 }
 
-func cmdStatus(_ []string) error {
+func cmdStatus(args []string) error {
+	flags := ParseFlags(args, nil)
 	c := client.New()
 	ctx := context.Background()
 
-	if !c.IsDaemonRunning() {
-		fmt.Println("Daemon: not running")
-		return nil
+	daemonRunning := c.IsDaemonRunning()
+	if !daemonRunning {
+		out := NewOutputWriterFromFlags(flags)
+		return out.WriteStatus(nil, false)
 	}
 
 	status, err := c.GetStatus(ctx)
@@ -127,24 +129,66 @@ func cmdStatus(_ []string) error {
 		return fmt.Errorf("failed to get status: %w", err)
 	}
 
-	fmt.Println("Daemon: running")
-	fmt.Printf("Uptime: %s\n", status.Uptime)
+	out := NewOutputWriterFromFlags(flags)
+	return out.WriteStatus(status, true)
+}
+
+func cmdPasswd(_ []string) error {
+	c := client.New()
+	ctx := context.Background()
+
+	if !c.IsDaemonRunning() {
+		return fmt.Errorf("daemon is not running, start it with: omnivault daemon start")
+	}
+
+	status, err := c.GetStatus(ctx)
+	if err != nil {
+		return fmt.Errorf("failed to get status: %w", err)
+	}
 
 	if !status.VaultExists {
-		fmt.Println("Vault: not initialized")
-		return nil
+		return fmt.Errorf("vault does not exist, run: omnivault init")
 	}
 
 	if status.Locked {
-		fmt.Println("Vault: locked")
-	} else {
-		fmt.Println("Vault: unlocked")
-		fmt.Printf("Secrets: %d\n", status.SecretCount)
-		if !status.UnlockedAt.IsZero() {
-			fmt.Printf("Unlocked at: %s\n", status.UnlockedAt.Format("2006-01-02 15:04:05"))
-		}
+		return fmt.Errorf("vault is locked, unlock it first with: omnivault unlock")
 	}
 
+	// Prompt for current password
+	fmt.Print("Enter current password: ")
+	currentPassword, err := readPassword()
+	if err != nil {
+		return fmt.Errorf("failed to read password: %w", err)
+	}
+
+	// Prompt for new password
+	fmt.Print("Enter new password (min 8 chars): ")
+	newPassword, err := readPassword()
+	if err != nil {
+		return fmt.Errorf("failed to read password: %w", err)
+	}
+
+	if len(newPassword) < 8 {
+		return fmt.Errorf("password must be at least 8 characters")
+	}
+
+	// Confirm new password
+	fmt.Print("Confirm new password: ")
+	confirmPassword, err := readPassword()
+	if err != nil {
+		return fmt.Errorf("failed to read password: %w", err)
+	}
+
+	if newPassword != confirmPassword {
+		return fmt.Errorf("passwords do not match")
+	}
+
+	// Change password
+	if err := c.ChangePassword(ctx, currentPassword, newPassword); err != nil {
+		return fmt.Errorf("failed to change password: %w", err)
+	}
+
+	fmt.Println("Password changed successfully!")
 	return nil
 }
 

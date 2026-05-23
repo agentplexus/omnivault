@@ -12,11 +12,13 @@ import (
 )
 
 func cmdGet(args []string) error {
-	if len(args) < 1 {
-		return fmt.Errorf("usage: omnivault get <path>")
+	flags := ParseFlags(args, nil)
+
+	if len(flags.Args) < 1 {
+		return fmt.Errorf("usage: omnivault get <path> [--format text|json|yaml|shell] [--field <name>]")
 	}
 
-	path := args[0]
+	path := flags.Args[0]
 	c := client.New()
 	ctx := context.Background()
 
@@ -29,19 +31,15 @@ func cmdGet(args []string) error {
 		return err
 	}
 
-	// Print value
-	if secret.Value != "" {
-		fmt.Println(secret.Value)
+	// Check for expiry warnings
+	if err := checkExpiryWarning(secret); err != nil {
+		// Warning already printed to stderr, continue
 	}
 
-	// Print fields if present
-	if len(secret.Fields) > 0 {
-		for k, v := range secret.Fields {
-			fmt.Printf("%s: %s\n", k, v)
-		}
-	}
-
-	return nil
+	// Output using the formatter
+	out := NewOutputWriterFromFlags(flags)
+	fieldName := flags.Get("field")
+	return out.WriteSecret(secret, fieldName)
 }
 
 func cmdSet(args []string) error {
@@ -93,9 +91,11 @@ func cmdSet(args []string) error {
 }
 
 func cmdList(args []string) error {
+	flags := ParseFlags(args, []string{"metadata"})
+
 	prefix := ""
-	if len(args) >= 1 {
-		prefix = args[0]
+	if len(flags.Args) >= 1 {
+		prefix = flags.Args[0]
 	}
 
 	c := client.New()
@@ -110,29 +110,54 @@ func cmdList(args []string) error {
 		return err
 	}
 
-	if resp.Count == 0 {
-		fmt.Println("No secrets found")
+	// Output using the formatter
+	out := NewOutputWriterFromFlags(flags)
+	showMetadata := flags.GetBool("metadata")
+	return out.WriteList(resp, showMetadata)
+}
+
+func cmdSearch(args []string) error {
+	flags := ParseFlags(args, []string{"regex"})
+
+	if len(flags.Args) < 1 {
+		return fmt.Errorf("usage: omnivault search <pattern> [--regex] [--format json|yaml]")
+	}
+
+	pattern := flags.Args[0]
+	useRegex := flags.GetBool("regex")
+
+	c := client.New()
+	ctx := context.Background()
+
+	if !c.IsDaemonRunning() {
+		return fmt.Errorf("daemon is not running, start it with: omnivault daemon start")
+	}
+
+	resp, err := c.Search(ctx, pattern, useRegex)
+	if err != nil {
+		return err
+	}
+
+	out := NewOutputWriterFromFlags(flags)
+
+	switch out.format {
+	case FormatJSON, FormatYAML:
+		if out.format == FormatJSON {
+			return out.writeJSON(resp)
+		}
+		return out.writeYAML(resp)
+	default:
+		if resp.Count == 0 {
+			fmt.Println("No secrets found matching pattern")
+			return nil
+		}
+
+		for _, path := range resp.Paths {
+			fmt.Println(path)
+		}
+		fmt.Printf("\n%d secret(s) found\n", resp.Count)
 		return nil
 	}
-
-	for _, item := range resp.Secrets {
-		typeIndicator := ""
-		if item.HasValue && item.HasFields {
-			typeIndicator = " (value+fields)"
-		} else if item.HasFields {
-			typeIndicator = " (fields)"
-		}
-
-		tagStr := ""
-		if len(item.Tags) > 0 {
-			tagStr = fmt.Sprintf(" [%s]", strings.Join(item.Tags, ", "))
-		}
-
-		fmt.Printf("%s%s%s\n", item.Path, typeIndicator, tagStr)
-	}
-
-	fmt.Printf("\n%d secret(s)\n", resp.Count)
-	return nil
 }
 
 func cmdDelete(args []string) error {

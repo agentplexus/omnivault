@@ -6,7 +6,7 @@ import (
 	"os"
 )
 
-const version = "0.1.0"
+const version = "0.5.0"
 
 func main() {
 	if len(os.Args) < 2 {
@@ -35,6 +35,14 @@ func main() {
 		err = cmdList(args)
 	case "delete", "rm":
 		err = cmdDelete(args)
+	case "search":
+		err = cmdSearch(args)
+	case "export":
+		err = cmdExport(args)
+	case "import":
+		err = cmdImport(args)
+	case "passwd":
+		err = cmdPasswd(args)
 	case "daemon":
 		err = cmdDaemon(args)
 	case "version":
@@ -64,12 +72,25 @@ Vault Commands:
   unlock            Unlock the vault
   lock              Lock the vault
   status            Show vault and daemon status
+  passwd            Change the master password
 
 Secret Commands:
   get <path>        Get a secret value
+    --format        Output format: text, json, yaml, shell (default: text)
+    --field         Extract a specific field from the secret
   set <path> [val]  Set a secret (prompts for value if not provided)
   list [prefix]     List secrets
+    --format        Output format: text, json, yaml (default: text)
+    --metadata      Show detailed metadata (timestamps, full tags)
   delete <path>     Delete a secret
+  search <pattern>  Search for secrets by path
+    --regex         Use regex pattern instead of glob
+
+Import/Export Commands:
+  export [prefix]   Export secrets as JSON
+    --output        Output file (default: stdout)
+  import [file]     Import secrets from JSON (default: stdin)
+    --merge         Skip existing secrets instead of overwriting
 
 Daemon Commands:
   daemon start      Start the daemon in background
@@ -81,10 +102,23 @@ Other Commands:
   version           Show version
   help              Show this help
 
+Configuration:
+  Config file: ~/.omnivault/config.json
+  Supported settings:
+    auto_lock_timeout    Duration before auto-lock (e.g., "15m", "1h")
+    default_format       Default output format (text, json, yaml)
+    expiry_warning_days  Days before expiry to show warnings (default: 30)
+
 Examples:
   omnivault init
   omnivault set database/password
   omnivault get database/password
-  omnivault list database/
-  omnivault delete database/password`)
+  omnivault get database/password --format json
+  omnivault get database/password --field password
+  omnivault list database/ --metadata
+  omnivault search "database/*"
+  omnivault search ".*prod.*" --regex
+  omnivault export > backup.json
+  omnivault import backup.json --merge
+  omnivault passwd`)
 }
