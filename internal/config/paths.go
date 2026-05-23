@@ -12,6 +12,9 @@ type Paths struct {
 	// ConfigDir is the base configuration directory.
 	ConfigDir string
 
+	// ConfigFile is the user configuration file.
+	ConfigFile string
+
 	// VaultFile is the encrypted vault data file.
 	VaultFile string
 
@@ -52,6 +55,7 @@ func unixPaths() *Paths {
 
 	return &Paths{
 		ConfigDir:  configDir,
+		ConfigFile: filepath.Join(configDir, "config.json"),
 		VaultFile:  filepath.Join(configDir, "vault.enc"),
 		MetaFile:   filepath.Join(configDir, "vault.meta"),
 		SocketPath: filepath.Join(configDir, "omnivaultd.sock"),
@@ -72,6 +76,7 @@ func windowsPaths() *Paths {
 
 	return &Paths{
 		ConfigDir:  configDir,
+		ConfigFile: filepath.Join(configDir, "config.json"),
 		VaultFile:  filepath.Join(configDir, "vault.enc"),
 		MetaFile:   filepath.Join(configDir, "vault.meta"),
 		SocketPath: "", // Not used on Windows
