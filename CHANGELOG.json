@@ -1,11 +1,63 @@
 {
-  "ir_version": "1.0",
+  "irVersion": "1.0",
   "project": "omnivault",
   "repository": "https://github.com/plexusone/omnivault",
   "versioning": "semver",
-  "commit_convention": "conventional",
-  "unreleased": {},
+  "commitConvention": "conventional",
   "releases": [
+    {
+      "version": "v0.4.0",
+      "date": "2026-05-23",
+      "highlights": [
+        {
+          "description": "Provider registry pattern with VaultFromURI for automatic vault creation from URIs"
+        }
+      ],
+      "added": [
+        {
+          "description": "Provider registry with `RegisterProvider`/`UnregisterProvider` for scheme-based provider factories",
+          "commit": "ba54e72"
+        },
+        {
+          "description": "`VaultFromURI` function to create vaults from URI strings (e.g., `file:///path`, `env://PREFIX_`)",
+          "commit": "ba54e72"
+        },
+        {
+          "description": "`RegisteredSchemes` function to query all registered URI schemes",
+          "commit": "ba54e72"
+        },
+        {
+          "description": "Built-in factories for `memory://`, `file://`, and `env://` schemes",
+          "commit": "ba54e72"
+        },
+        {
+          "description": "Support for external providers to self-register via `init()` imports",
+          "commit": "ba54e72"
+        },
+        {
+          "description": "PlexusOne unified navigation and theme for MkDocs",
+          "commit": "d1a5cf6"
+        }
+      ],
+      "changed": [
+        {
+          "description": "Bump `golang.org/x/crypto` from 0.48.0 to 0.52.0",
+          "commit": "c7ca0c8"
+        },
+        {
+          "description": "Bump `golang.org/x/term` from 0.40.0 to 0.43.0",
+          "commit": "276dad7"
+        },
+        {
+          "description": "Bump `github.com/grokify/oscompat` from 0.1.0 to 0.3.0",
+          "commit": "27a1c4e"
+        },
+        {
+          "description": "Update LICENSE copyright years",
+          "commit": "78eafb8"
+        }
+      ]
+    },
     {
       "version": "v0.3.0",
       "date": "2026-03-01",
