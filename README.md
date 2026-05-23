@@ -87,6 +87,47 @@ func main() {
 }
 ```
 
+### VaultFromURI
+
+Create vaults directly from URI strings:
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "log"
+
+    "github.com/plexusone/omnivault"
+)
+
+func main() {
+    ctx := context.Background()
+
+    // Create vault from URI (built-in providers)
+    vault, err := omnivault.VaultFromURI("file:///path/to/secrets")
+    if err != nil {
+        log.Fatal(err)
+    }
+
+    secret, _ := vault.Get(ctx, "api-key")
+    fmt.Println("API Key:", secret.Value)
+}
+```
+
+External providers can self-register via `init()` imports:
+
+```go
+import (
+    "github.com/plexusone/omnivault"
+    _ "github.com/plexusone/omni-onepassword/omnivault/register" // Registers "op://"
+)
+
+// Now op:// URIs work automatically
+v, err := omnivault.VaultFromURI("op://MyVault")
+```
+
 ### Multi-Provider Resolution
 
 ```go
@@ -311,6 +352,26 @@ secret := client.MustGet(ctx, "path")
 value := client.MustGetValue(ctx, "path")
 ```
 
+### Provider Registry
+
+```go
+// Create vault from URI
+vault, err := omnivault.VaultFromURI("file:///path/to/secrets")
+vault, err := omnivault.VaultFromURI("env://MY_PREFIX_")
+vault, err := omnivault.VaultFromURI("memory://")
+
+// List registered schemes
+schemes := omnivault.RegisteredSchemes() // ["memory", "file", "env"]
+
+// Register custom provider factory
+omnivault.RegisterProvider("myscheme", func(uri string) (vault.Vault, error) {
+    return myProvider.New(uri)
+})
+
+// Unregister a provider
+omnivault.UnregisterProvider("myscheme")
+```
+
 ### Resolver
 
 ```go
@@ -366,6 +427,7 @@ omnivault/
 │   ├── file/           # File-based storage
 │   └── memory/         # In-memory storage
 ├── client.go           # Main client
+├── registry.go         # Provider registry and VaultFromURI
 ├── resolver.go         # URI-based resolution
 ├── providers.go        # Provider factory
 ├── constants.go        # Provider names
