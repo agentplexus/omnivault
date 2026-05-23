@@ -117,6 +117,52 @@ func (c *Client) Lock(ctx context.Context) error {
 	return c.post(ctx, "/lock", nil, &resp)
 }
 
+// ChangePassword changes the master password.
+func (c *Client) ChangePassword(ctx context.Context, oldPassword, newPassword string) error {
+	req := daemon.ChangePasswordRequest{
+		OldPassword: oldPassword,
+		NewPassword: newPassword,
+	}
+	var resp daemon.SuccessResponse
+	return c.post(ctx, "/password", req, &resp)
+}
+
+// Search searches for secrets matching a pattern.
+func (c *Client) Search(ctx context.Context, pattern string, regex bool) (*daemon.SearchResponse, error) {
+	req := daemon.SearchRequest{
+		Pattern: pattern,
+		Regex:   regex,
+	}
+	var resp daemon.SearchResponse
+	if err := c.post(ctx, "/search", req, &resp); err != nil {
+		return nil, err
+	}
+	return &resp, nil
+}
+
+// Export exports secrets from the vault.
+func (c *Client) Export(ctx context.Context, prefix string) (*daemon.ExportResponse, error) {
+	req := daemon.ExportRequest{Prefix: prefix}
+	var resp daemon.ExportResponse
+	if err := c.post(ctx, "/export", req, &resp); err != nil {
+		return nil, err
+	}
+	return &resp, nil
+}
+
+// Import imports secrets into the vault.
+func (c *Client) Import(ctx context.Context, secrets []daemon.ExportedSecret, merge bool) (*daemon.ImportResponse, error) {
+	req := daemon.ImportRequest{
+		Secrets: secrets,
+		Merge:   merge,
+	}
+	var resp daemon.ImportResponse
+	if err := c.post(ctx, "/import", req, &resp); err != nil {
+		return nil, err
+	}
+	return &resp, nil
+}
+
 // ListSecrets returns all secrets.
 func (c *Client) ListSecrets(ctx context.Context, prefix string) (*daemon.ListResponse, error) {
 	path := "/secrets"

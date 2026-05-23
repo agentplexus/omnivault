@@ -9,6 +9,8 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
+	"path/filepath"
+	"regexp"
 	"runtime"
 	"strings"
 	"sync"
@@ -172,8 +174,12 @@ func (s *Server) registerRoutes(mux *http.ServeMux) {
 	mux.HandleFunc("/init", s.handleInit)
 	mux.HandleFunc("/unlock", s.handleUnlock)
 	mux.HandleFunc("/lock", s.handleLock)
+	mux.HandleFunc("/password", s.handlePassword)
 	mux.HandleFunc("/secrets", s.handleSecrets)
 	mux.HandleFunc("/secret/", s.handleSecret)
+	mux.HandleFunc("/search", s.handleSearch)
+	mux.HandleFunc("/export", s.handleExport)
+	mux.HandleFunc("/import", s.handleImport)
 	mux.HandleFunc("/stop", s.handleStop)
 }
 
@@ -293,6 +299,44 @@ func (s *Server) handleLock(w http.ResponseWriter, r *http.Request) {
 	s.writeJSON(w, http.StatusOK, SuccessResponse{Success: true, Message: "vault locked"})
 }
 
+// handlePassword changes the master password.
+func (s *Server) handlePassword(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		s.writeError(w, http.StatusMethodNotAllowed, "method not allowed", "")
+		return
+	}
+
+	var req ChangePasswordRequest
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		s.writeError(w, http.StatusBadRequest, "invalid request body", ErrCodeInvalidRequest)
+		return
+	}
+
+	if len(req.NewPassword) < 8 {
+		s.writeError(w, http.StatusBadRequest, "new password must be at least 8 characters", ErrCodeInvalidRequest)
+		return
+	}
+
+	s.mu.Lock()
+	defer s.mu.Unlock()
+
+	if s.store.IsLocked() {
+		s.writeError(w, http.StatusForbidden, "vault is locked", ErrCodeVaultLocked)
+		return
+	}
+
+	if err := s.store.ChangePassword(req.OldPassword, req.NewPassword); err != nil {
+		if strings.Contains(err.Error(), "invalid") {
+			s.writeError(w, http.StatusUnauthorized, err.Error(), ErrCodeInvalidPassword)
+		} else {
+			s.writeError(w, http.StatusInternalServerError, err.Error(), ErrCodeInternalError)
+		}
+		return
+	}
+
+	s.writeJSON(w, http.StatusOK, SuccessResponse{Success: true, Message: "password changed"})
+}
+
 // handleSecrets handles listing secrets.
 func (s *Server) handleSecrets(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodGet {
@@ -324,7 +368,9 @@ func (s *Server) handleSecrets(w http.ResponseWriter, r *http.Request) {
 		}
 
 		var tags []string
+		var tagsMap map[string]string
 		if secret.Metadata.Tags != nil {
+			tagsMap = secret.Metadata.Tags
 			for k := range secret.Metadata.Tags {
 				tags = append(tags, k)
 			}
@@ -335,9 +381,16 @@ func (s *Server) handleSecrets(w http.ResponseWriter, r *http.Request) {
 			HasValue:  secret.Value != "" || len(secret.ValueBytes) > 0,
 			HasFields: len(secret.Fields) > 0,
 			Tags:      tags,
+			TagsMap:   tagsMap,
+		}
+		if secret.Metadata.CreatedAt != nil {
+			item.CreatedAt = secret.Metadata.CreatedAt.Time
 		}
 		if secret.Metadata.ModifiedAt != nil {
 			item.UpdatedAt = secret.Metadata.ModifiedAt.Time
+		}
+		if secret.Metadata.ExpiresAt != nil {
+			item.ExpiresAt = secret.Metadata.ExpiresAt.Time
 		}
 
 		items = append(items, item)
@@ -401,6 +454,9 @@ func (s *Server) getSecret(w http.ResponseWriter, r *http.Request, path string) 
 	if secret.Metadata.ModifiedAt != nil {
 		resp.UpdatedAt = secret.Metadata.ModifiedAt.Time
 	}
+	if secret.Metadata.ExpiresAt != nil {
+		resp.ExpiresAt = secret.Metadata.ExpiresAt.Time
+	}
 
 	s.resetAutoLock()
 	s.writeJSON(w, http.StatusOK, resp)
@@ -438,6 +494,192 @@ func (s *Server) deleteSecret(w http.ResponseWriter, r *http.Request, path strin
 
 	s.resetAutoLock()
 	s.writeJSON(w, http.StatusOK, SuccessResponse{Success: true, Message: "secret deleted"})
+}
+
+// handleSearch searches for secrets matching a pattern.
+func (s *Server) handleSearch(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		s.writeError(w, http.StatusMethodNotAllowed, "method not allowed", "")
+		return
+	}
+
+	var req SearchRequest
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		s.writeError(w, http.StatusBadRequest, "invalid request body", ErrCodeInvalidRequest)
+		return
+	}
+
+	s.mu.RLock()
+	defer s.mu.RUnlock()
+
+	if s.store.IsLocked() {
+		s.writeError(w, http.StatusForbidden, "vault is locked", ErrCodeVaultLocked)
+		return
+	}
+
+	// Get all paths
+	allPaths, err := s.store.List(r.Context(), "")
+	if err != nil {
+		s.writeError(w, http.StatusInternalServerError, err.Error(), ErrCodeInternalError)
+		return
+	}
+
+	var matches []string
+	if req.Regex {
+		// Regex matching
+		re, err := regexp.Compile(req.Pattern)
+		if err != nil {
+			s.writeError(w, http.StatusBadRequest, "invalid regex pattern: "+err.Error(), ErrCodeInvalidRequest)
+			return
+		}
+		for _, path := range allPaths {
+			if re.MatchString(path) {
+				matches = append(matches, path)
+			}
+		}
+	} else {
+		// Glob matching
+		for _, path := range allPaths {
+			matched, err := filepath.Match(req.Pattern, path)
+			if err != nil {
+				// If glob pattern is invalid, fall back to prefix matching
+				if strings.HasPrefix(path, strings.TrimSuffix(req.Pattern, "*")) {
+					matches = append(matches, path)
+				}
+				continue
+			}
+			if matched {
+				matches = append(matches, path)
+			}
+		}
+
+		// If no glob matches, try prefix/contains matching
+		if len(matches) == 0 {
+			pattern := strings.TrimSuffix(strings.TrimPrefix(req.Pattern, "*"), "*")
+			for _, path := range allPaths {
+				if strings.Contains(path, pattern) {
+					matches = append(matches, path)
+				}
+			}
+		}
+	}
+
+	s.resetAutoLock()
+	s.writeJSON(w, http.StatusOK, SearchResponse{Paths: matches, Count: len(matches)})
+}
+
+// handleExport exports secrets from the vault.
+func (s *Server) handleExport(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		s.writeError(w, http.StatusMethodNotAllowed, "method not allowed", "")
+		return
+	}
+
+	var req ExportRequest
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		// Empty body is allowed
+		req = ExportRequest{}
+	}
+
+	s.mu.RLock()
+	defer s.mu.RUnlock()
+
+	if s.store.IsLocked() {
+		s.writeError(w, http.StatusForbidden, "vault is locked", ErrCodeVaultLocked)
+		return
+	}
+
+	paths, err := s.store.List(r.Context(), req.Prefix)
+	if err != nil {
+		s.writeError(w, http.StatusInternalServerError, err.Error(), ErrCodeInternalError)
+		return
+	}
+
+	secrets := make([]ExportedSecret, 0, len(paths))
+	for _, path := range paths {
+		secret, err := s.store.Get(r.Context(), path)
+		if err != nil {
+			continue
+		}
+
+		exported := ExportedSecret{
+			Path:   path,
+			Value:  secret.String(),
+			Fields: secret.Fields,
+		}
+		if secret.Metadata.Tags != nil {
+			exported.Tags = secret.Metadata.Tags
+		}
+		if secret.Metadata.ExpiresAt != nil {
+			exported.ExpiresAt = secret.Metadata.ExpiresAt.Time
+		}
+
+		secrets = append(secrets, exported)
+	}
+
+	s.resetAutoLock()
+	s.writeJSON(w, http.StatusOK, ExportResponse{Secrets: secrets, Count: len(secrets)})
+}
+
+// handleImport imports secrets into the vault.
+func (s *Server) handleImport(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		s.writeError(w, http.StatusMethodNotAllowed, "method not allowed", "")
+		return
+	}
+
+	var req ImportRequest
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		s.writeError(w, http.StatusBadRequest, "invalid request body", ErrCodeInvalidRequest)
+		return
+	}
+
+	s.mu.Lock()
+	defer s.mu.Unlock()
+
+	if s.store.IsLocked() {
+		s.writeError(w, http.StatusForbidden, "vault is locked", ErrCodeVaultLocked)
+		return
+	}
+
+	var imported, skipped, errors int
+
+	for _, exported := range req.Secrets {
+		// Check if secret exists
+		exists, _ := s.store.Exists(r.Context(), exported.Path)
+
+		if exists && req.Merge {
+			// Skip existing secrets in merge mode
+			skipped++
+			continue
+		}
+
+		// Create secret
+		secret := &vault.Secret{
+			Value:  exported.Value,
+			Fields: exported.Fields,
+			Metadata: vault.Metadata{
+				Tags: exported.Tags,
+			},
+		}
+		if !exported.ExpiresAt.IsZero() {
+			secret.Metadata.ExpiresAt = vault.NewTimestamp(exported.ExpiresAt)
+		}
+
+		if err := s.store.Set(r.Context(), exported.Path, secret); err != nil {
+			errors++
+			continue
+		}
+
+		imported++
+	}
+
+	s.resetAutoLock()
+	s.writeJSON(w, http.StatusOK, ImportResponse{
+		Imported: imported,
+		Skipped:  skipped,
+		Errors:   errors,
+	})
 }
 
 // handleStop stops the daemon.

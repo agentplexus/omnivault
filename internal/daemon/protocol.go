@@ -28,6 +28,51 @@ type InitRequest struct {
 	Password string `json:"password"` //nolint:gosec // G117: password field is intentional for vault
 }
 
+// SearchRequest is the request to search for secrets.
+type SearchRequest struct {
+	Pattern string `json:"pattern"`
+	Regex   bool   `json:"regex"`
+}
+
+// SearchResponse is the response for search requests.
+type SearchResponse struct {
+	Paths []string `json:"paths"`
+	Count int      `json:"count"`
+}
+
+// ExportedSecret represents a secret for import/export.
+type ExportedSecret struct {
+	Path      string            `json:"path"`
+	Value     string            `json:"value,omitempty"`
+	Fields    map[string]string `json:"fields,omitempty"`
+	Tags      map[string]string `json:"tags,omitempty"`
+	ExpiresAt time.Time         `json:"expires_at,omitempty"`
+}
+
+// ExportRequest is the request to export secrets.
+type ExportRequest struct {
+	Prefix string `json:"prefix,omitempty"`
+}
+
+// ExportResponse is the response for export requests.
+type ExportResponse struct {
+	Secrets []ExportedSecret `json:"secrets"`
+	Count   int              `json:"count"`
+}
+
+// ImportRequest is the request to import secrets.
+type ImportRequest struct {
+	Secrets []ExportedSecret `json:"secrets"`
+	Merge   bool             `json:"merge"` // If true, skip existing secrets instead of overwriting
+}
+
+// ImportResponse is the response for import requests.
+type ImportResponse struct {
+	Imported int `json:"imported"`
+	Skipped  int `json:"skipped"`
+	Errors   int `json:"errors"`
+}
+
 // Response types for daemon IPC.
 
 // StatusResponse is the response for status requests.
@@ -48,15 +93,19 @@ type SecretResponse struct {
 	Tags      map[string]string `json:"tags,omitempty"`
 	CreatedAt time.Time         `json:"created_at,omitempty"`
 	UpdatedAt time.Time         `json:"updated_at,omitempty"`
+	ExpiresAt time.Time         `json:"expires_at,omitempty"`
 }
 
 // SecretListItem is an item in the secret list (metadata only).
 type SecretListItem struct {
-	Path      string    `json:"path"`
-	HasValue  bool      `json:"has_value"`
-	HasFields bool      `json:"has_fields"`
-	Tags      []string  `json:"tags,omitempty"`
-	UpdatedAt time.Time `json:"updated_at,omitempty"`
+	Path      string            `json:"path"`
+	HasValue  bool              `json:"has_value"`
+	HasFields bool              `json:"has_fields"`
+	Tags      []string          `json:"tags,omitempty"`
+	TagsMap   map[string]string `json:"tags_map,omitempty"`
+	CreatedAt time.Time         `json:"created_at,omitempty"`
+	UpdatedAt time.Time         `json:"updated_at,omitempty"`
+	ExpiresAt time.Time         `json:"expires_at,omitempty"`
 }
 
 // ListResponse is the response for list requests.
