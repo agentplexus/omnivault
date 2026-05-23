@@ -46,6 +46,7 @@ func setupTestEnv(t *testing.T) *testEnv {
 	// Override paths to use temp directory
 	paths := &config.Paths{
 		ConfigDir:  tempDir,
+		ConfigFile: filepath.Join(tempDir, "config.json"),
 		VaultFile:  filepath.Join(tempDir, "vault.enc"),
 		MetaFile:   filepath.Join(tempDir, "vault.meta"),
 		SocketPath: filepath.Join(tempDir, "omnivaultd.sock"),
@@ -467,4 +468,183 @@ func TestDuplicateInit(t *testing.T) {
 	if err == nil {
 		t.Error("Expected error for duplicate init")
 	}
+}
+
+// TestPasswordChange tests changing the master password.
+func TestPasswordChange(t *testing.T) {
+	env := setupTestEnv(t)
+	defer env.cleanup()
+
+	ctx := context.Background()
+
+	// Initialize vault
+	if err := env.client.Init(ctx, "testpassword123"); err != nil {
+		t.Fatalf("Failed to init vault: %v", err)
+	}
+
+	// Set a secret before changing password
+	if err := env.client.SetSecret(ctx, "test/secret", "secretvalue", nil, nil); err != nil {
+		t.Fatalf("Failed to set secret: %v", err)
+	}
+
+	// Change password
+	t.Run("ChangePassword", func(t *testing.T) {
+		err := env.client.ChangePassword(ctx, "testpassword123", "newpassword456")
+		if err != nil {
+			t.Fatalf("Failed to change password: %v", err)
+		}
+	})
+
+	// Lock and unlock with new password
+	t.Run("UnlockWithNewPassword", func(t *testing.T) {
+		if err := env.client.Lock(ctx); err != nil {
+			t.Fatalf("Failed to lock: %v", err)
+		}
+
+		if err := env.client.Unlock(ctx, "newpassword456"); err != nil {
+			t.Fatalf("Failed to unlock with new password: %v", err)
+		}
+	})
+
+	// Verify old password no longer works
+	t.Run("OldPasswordFails", func(t *testing.T) {
+		if err := env.client.Lock(ctx); err != nil {
+			t.Fatalf("Failed to lock: %v", err)
+		}
+
+		err := env.client.Unlock(ctx, "testpassword123")
+		if err == nil {
+			t.Error("Expected error unlocking with old password")
+		}
+	})
+
+	// Verify secret is still accessible
+	t.Run("SecretStillAccessible", func(t *testing.T) {
+		if err := env.client.Unlock(ctx, "newpassword456"); err != nil {
+			t.Fatalf("Failed to unlock: %v", err)
+		}
+
+		secret, err := env.client.GetSecret(ctx, "test/secret")
+		if err != nil {
+			t.Fatalf("Failed to get secret: %v", err)
+		}
+
+		if secret.Value != "secretvalue" {
+			t.Errorf("Expected value 'secretvalue', got '%s'", secret.Value)
+		}
+	})
+}
+
+// TestSearch tests searching for secrets.
+func TestSearch(t *testing.T) {
+	env := setupTestEnv(t)
+	defer env.cleanup()
+
+	ctx := context.Background()
+
+	// Initialize vault
+	if err := env.client.Init(ctx, "testpassword123"); err != nil {
+		t.Fatalf("Failed to init vault: %v", err)
+	}
+
+	// Add test secrets
+	secrets := []string{
+		"database/prod/password",
+		"database/dev/password",
+		"api/prod/key",
+		"api/dev/key",
+	}
+	for _, path := range secrets {
+		if err := env.client.SetSecret(ctx, path, "value", nil, nil); err != nil {
+			t.Fatalf("Failed to set secret: %v", err)
+		}
+	}
+
+	// Test glob search
+	t.Run("GlobSearch", func(t *testing.T) {
+		resp, err := env.client.Search(ctx, "database", false)
+		if err != nil {
+			t.Fatalf("Failed to search: %v", err)
+		}
+
+		if resp.Count != 2 {
+			t.Errorf("Expected 2 matches, got %d", resp.Count)
+		}
+	})
+
+	// Test regex search
+	t.Run("RegexSearch", func(t *testing.T) {
+		resp, err := env.client.Search(ctx, ".*prod.*", true)
+		if err != nil {
+			t.Fatalf("Failed to search: %v", err)
+		}
+
+		if resp.Count != 2 {
+			t.Errorf("Expected 2 matches, got %d", resp.Count)
+		}
+	})
+}
+
+// TestImportExport tests importing and exporting secrets.
+func TestImportExport(t *testing.T) {
+	env := setupTestEnv(t)
+	defer env.cleanup()
+
+	ctx := context.Background()
+
+	// Initialize vault
+	if err := env.client.Init(ctx, "testpassword123"); err != nil {
+		t.Fatalf("Failed to init vault: %v", err)
+	}
+
+	// Add test secrets
+	if err := env.client.SetSecret(ctx, "test/secret1", "value1", nil, nil); err != nil {
+		t.Fatalf("Failed to set secret: %v", err)
+	}
+	if err := env.client.SetSecret(ctx, "test/secret2", "value2", map[string]string{"field1": "data"}, nil); err != nil {
+		t.Fatalf("Failed to set secret: %v", err)
+	}
+
+	// Export
+	t.Run("Export", func(t *testing.T) {
+		resp, err := env.client.Export(ctx, "")
+		if err != nil {
+			t.Fatalf("Failed to export: %v", err)
+		}
+
+		if resp.Count != 2 {
+			t.Errorf("Expected 2 exported secrets, got %d", resp.Count)
+		}
+	})
+
+	// Export with prefix
+	t.Run("ExportWithPrefix", func(t *testing.T) {
+		resp, err := env.client.Export(ctx, "test/secret1")
+		if err != nil {
+			t.Fatalf("Failed to export: %v", err)
+		}
+
+		if resp.Count != 1 {
+			t.Errorf("Expected 1 exported secret, got %d", resp.Count)
+		}
+	})
+
+	// Import with merge
+	t.Run("ImportMerge", func(t *testing.T) {
+		// Export first
+		exportResp, err := env.client.Export(ctx, "")
+		if err != nil {
+			t.Fatalf("Failed to export: %v", err)
+		}
+
+		// Import back with merge - should skip existing
+		importResp, err := env.client.Import(ctx, exportResp.Secrets, true)
+		if err != nil {
+			t.Fatalf("Failed to import: %v", err)
+		}
+
+		if importResp.Skipped != 2 {
+			t.Errorf("Expected 2 skipped, got %d", importResp.Skipped)
+		}
+	})
 }
