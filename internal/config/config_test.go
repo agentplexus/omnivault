@@ -6,6 +6,8 @@ import (
 	"runtime"
 	"testing"
 	"time"
+
+	"github.com/grokify/oscompat/fs"
 )
 
 func TestDefaultConfig(t *testing.T) {
@@ -50,7 +52,7 @@ func TestLoadConfigFromFile_ValidJSON(t *testing.T) {
 		"expiry_warning_days": 7,
 		"default_tags": {"env": "prod", "team": "platform"}
 	}`
-	if err := os.WriteFile(configPath, []byte(content), 0600); err != nil {
+	if err := fs.WriteFilePrivate(configPath, []byte(content)); err != nil {
 		t.Fatalf("Failed to write test config: %v", err)
 	}
 
@@ -82,7 +84,7 @@ func TestLoadConfigFromFile_PartialJSON(t *testing.T) {
 
 	// Only override some fields
 	content := `{"default_format": "yaml"}`
-	if err := os.WriteFile(configPath, []byte(content), 0600); err != nil {
+	if err := fs.WriteFilePrivate(configPath, []byte(content)); err != nil {
 		t.Fatalf("Failed to write test config: %v", err)
 	}
 
@@ -110,7 +112,7 @@ func TestLoadConfigFromFile_InvalidJSON(t *testing.T) {
 	configPath := filepath.Join(tmpDir, "config.json")
 
 	content := `{invalid json`
-	if err := os.WriteFile(configPath, []byte(content), 0600); err != nil {
+	if err := fs.WriteFilePrivate(configPath, []byte(content)); err != nil {
 		t.Fatalf("Failed to write test config: %v", err)
 	}
 
@@ -141,8 +143,8 @@ func TestSaveToFile(t *testing.T) {
 		if err != nil {
 			t.Fatalf("Failed to stat config file: %v", err)
 		}
-		if info.Mode().Perm() != 0600 {
-			t.Errorf("Config file permissions = %o, want 0600", info.Mode().Perm())
+		if info.Mode().Perm() != fs.PrivateFilePerm {
+			t.Errorf("Config file permissions = %o, want %o", info.Mode().Perm(), fs.PrivateFilePerm)
 		}
 	}
 
@@ -280,7 +282,7 @@ func TestEmptyConfig(t *testing.T) {
 	configPath := filepath.Join(tmpDir, "config.json")
 
 	// Write empty JSON object
-	if err := os.WriteFile(configPath, []byte("{}"), 0600); err != nil {
+	if err := fs.WriteFilePrivate(configPath, []byte("{}")); err != nil {
 		t.Fatalf("Failed to write test config: %v", err)
 	}
 

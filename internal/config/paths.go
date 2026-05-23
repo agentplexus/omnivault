@@ -5,6 +5,8 @@ import (
 	"os"
 	"path/filepath"
 	"runtime"
+
+	"github.com/grokify/oscompat/fs"
 )
 
 // Paths contains all file system paths used by OmniVault.
@@ -88,7 +90,7 @@ func windowsPaths() *Paths {
 
 // EnsureConfigDir creates the configuration directory if it doesn't exist.
 func (p *Paths) EnsureConfigDir() error {
-	return os.MkdirAll(p.ConfigDir, 0700)
+	return fs.MkdirAllPrivate(p.ConfigDir)
 }
 
 // VaultExists returns true if the vault file exists.

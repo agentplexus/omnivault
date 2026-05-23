@@ -12,6 +12,8 @@ import (
 	"sync"
 	"time"
 
+	"github.com/grokify/oscompat/fs"
+
 	"github.com/plexusone/omnivault/vault"
 )
 
@@ -345,7 +347,7 @@ func (s *EncryptedStore) SecretCount() int {
 // saveMeta saves the vault metadata to disk.
 func (s *EncryptedStore) saveMeta() error {
 	// Ensure directory exists
-	if err := os.MkdirAll(filepath.Dir(s.metaPath), 0700); err != nil {
+	if err := fs.MkdirAllPrivate(filepath.Dir(s.metaPath)); err != nil {
 		return err
 	}
 
@@ -354,7 +356,7 @@ func (s *EncryptedStore) saveMeta() error {
 		return err
 	}
 
-	return os.WriteFile(s.metaPath, data, 0600)
+	return fs.WriteFilePrivate(s.metaPath, data)
 }
 
 // loadMeta loads the vault metadata from disk.
@@ -376,7 +378,7 @@ func (s *EncryptedStore) loadMeta() error {
 // saveData saves the encrypted vault data to disk.
 func (s *EncryptedStore) saveData() error {
 	// Ensure directory exists
-	if err := os.MkdirAll(filepath.Dir(s.vaultPath), 0700); err != nil {
+	if err := fs.MkdirAllPrivate(filepath.Dir(s.vaultPath)); err != nil {
 		return err
 	}
 
@@ -385,7 +387,7 @@ func (s *EncryptedStore) saveData() error {
 		return err
 	}
 
-	if err := os.WriteFile(s.vaultPath, data, 0600); err != nil {
+	if err := fs.WriteFilePrivate(s.vaultPath, data); err != nil {
 		return err
 	}
 

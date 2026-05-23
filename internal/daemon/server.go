@@ -17,6 +17,8 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/grokify/oscompat/fs"
+
 	"github.com/plexusone/omnivault/internal/config"
 	"github.com/plexusone/omnivault/internal/store"
 	"github.com/plexusone/omnivault/vault"
@@ -722,7 +724,7 @@ func (s *Server) resetAutoLock() {
 // writePIDFile writes the daemon PID to a file.
 func (s *Server) writePIDFile() error {
 	pid := os.Getpid()
-	return os.WriteFile(s.paths.PIDFile, []byte(fmt.Sprintf("%d", pid)), 0600)
+	return fs.WriteFilePrivate(s.paths.PIDFile, []byte(fmt.Sprintf("%d", pid)))
 }
 
 // writeJSON writes a JSON response.

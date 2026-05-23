@@ -18,6 +18,8 @@ import (
 	"path/filepath"
 	"strings"
 
+	osfs "github.com/grokify/oscompat/fs"
+
 	"github.com/plexusone/omnivault/vault"
 )
 
@@ -55,10 +57,10 @@ func New(config Config) (*Provider, error) {
 
 	// Set defaults
 	if config.FileMode == 0 {
-		config.FileMode = 0600
+		config.FileMode = osfs.PrivateFilePerm
 	}
 	if config.DirMode == 0 {
-		config.DirMode = 0700
+		config.DirMode = osfs.PrivateDirPerm
 	}
 
 	// Create directory if it doesn't exist

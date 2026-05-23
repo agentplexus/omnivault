@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"os"
 	"time"
+
+	"github.com/grokify/oscompat/fs"
 )
 
 // Config represents the user configuration for OmniVault.
@@ -69,7 +71,7 @@ func (c *Config) SaveToFile(path string) error {
 	if err != nil {
 		return err
 	}
-	return os.WriteFile(path, data, 0600)
+	return fs.WriteFilePrivate(path, data)
 }
 
 // GetAutoLockDuration parses and returns the auto-lock timeout duration.
