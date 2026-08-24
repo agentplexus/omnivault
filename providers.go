@@ -6,6 +6,7 @@ import (
 	"github.com/plexusone/omnivault/providers/env"
 	"github.com/plexusone/omnivault/providers/file"
 	"github.com/plexusone/omnivault/providers/memory"
+	"github.com/plexusone/omnivault/providers/sqlstore"
 	"github.com/plexusone/omnivault/vault"
 )
 
@@ -20,11 +21,28 @@ func newProvider(config Config) (vault.Vault, error) {
 		return newMemoryProvider(config)
 	case ProviderFile:
 		return newFileProvider(config)
+	case ProviderSQL:
+		return newSQLProvider(config)
 	case "":
 		return nil, ErrNoProvider
 	default:
 		return nil, fmt.Errorf("%w: %s (use CustomVault for external providers)", ErrUnknownScheme, config.Provider)
 	}
+}
+
+// newSQLProvider creates a SQL-backed provider.
+func newSQLProvider(config Config) (vault.Vault, error) {
+	var sqlConfig sqlstore.Config
+
+	if pc, ok := config.ProviderConfig.(sqlstore.Config); ok {
+		sqlConfig = pc
+	} else if pc, ok := config.ProviderConfig.(*sqlstore.Config); ok && pc != nil {
+		sqlConfig = *pc
+	} else {
+		return nil, fmt.Errorf("sql provider requires sqlstore.Config in ProviderConfig")
+	}
+
+	return sqlstore.New(sqlConfig)
 }
 
 // newEnvProvider creates an environment variable provider.
@@ -68,3 +86,6 @@ type EnvConfig = env.Config
 
 // FileConfig is an alias for file.Config for convenience.
 type FileConfig = file.Config
+
+// SQLConfig is an alias for sqlstore.Config for convenience.
+type SQLConfig = sqlstore.Config

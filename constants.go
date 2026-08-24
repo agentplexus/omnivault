@@ -39,6 +39,7 @@ const (
 	ProviderEnv    ProviderName = "env"    // Environment variables
 	ProviderFile   ProviderName = "file"   // File-based
 	ProviderMemory ProviderName = "memory" // In-memory (testing)
+	ProviderSQL    ProviderName = "sql"    // SQL database table
 	ProviderDotEnv ProviderName = "dotenv" // .env files
 	ProviderSOPS   ProviderName = "sops"   // Mozilla SOPS
 	ProviderAge    ProviderName = "age"    // age encryption
