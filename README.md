@@ -207,6 +207,30 @@ func main() {
 | Environment Variables | `env://` | Read from `os.Getenv()` |
 | File | `file://` | File-based storage |
 | Memory | `memory://` | In-memory storage (for testing) |
+| SQL Store | `sql://` | Encrypted secrets in an application-owned SQL table |
+
+The SQL store is useful as a self-contained fallback for applications that
+cannot use an external vault yet. It still keeps the application code on the
+OmniVault interface, so moving from encrypted-in-database storage to keyring,
+AWS Secrets Manager, GCP Secret Manager, or another provider only changes the
+configured provider and stored secret references.
+
+```go
+provider, err := sqlstore.New(sqlstore.Config{
+    DB:            db,
+    Table:         "uiforge_vault_secrets",
+    Dialect:       sqlstore.DialectMySQL, // MySQL-compatible, including DoltDB
+    EncryptionKey: []byte(os.Getenv("UIFORGE_VAULT_KEY")),
+    AutoMigrate:   true,
+})
+resolver.Register("sql", provider)
+
+dsn, err := resolver.Resolve(ctx, "sql://analytics-sources/omniroadmap-local")
+```
+
+The SQL table stores encrypted payloads only. Keep the encryption key outside
+the same database, for example in `env://`, OS keyring, or a cloud secret
+manager.
 
 ### Official Provider Modules
 
