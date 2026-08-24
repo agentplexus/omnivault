@@ -251,7 +251,7 @@ func (p *Provider) Close() error {
 func (p *Provider) query(name string) string {
 	switch name {
 	case "get":
-		return fmt.Sprintf("SELECT nonce, ciphertext, key_id FROM %s WHERE path = %s", p.table, p.placeholder(1))
+		return fmt.Sprintf("SELECT nonce, ciphertext, key_id FROM %s WHERE path = %s", p.table, p.placeholder())
 	case "upsert":
 		switch p.dialect {
 		case DialectPostgres:
@@ -262,19 +262,19 @@ func (p *Provider) query(name string) string {
 			return fmt.Sprintf("INSERT INTO %s (path, nonce, ciphertext, key_id) VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE nonce = VALUES(nonce), ciphertext = VALUES(ciphertext), key_id = VALUES(key_id), updated_at = CURRENT_TIMESTAMP", p.table)
 		}
 	case "delete":
-		return fmt.Sprintf("DELETE FROM %s WHERE path = %s", p.table, p.placeholder(1))
+		return fmt.Sprintf("DELETE FROM %s WHERE path = %s", p.table, p.placeholder())
 	case "exists":
-		return fmt.Sprintf("SELECT COUNT(1) FROM %s WHERE path = %s", p.table, p.placeholder(1))
+		return fmt.Sprintf("SELECT COUNT(1) FROM %s WHERE path = %s", p.table, p.placeholder())
 	case "list":
-		return fmt.Sprintf("SELECT path FROM %s WHERE path LIKE %s ORDER BY path", p.table, p.placeholder(1))
+		return fmt.Sprintf("SELECT path FROM %s WHERE path LIKE %s ORDER BY path", p.table, p.placeholder())
 	default:
 		panic("unknown sqlstore query")
 	}
 }
 
-func (p *Provider) placeholder(index int) string {
+func (p *Provider) placeholder() string {
 	if p.dialect == DialectPostgres {
-		return fmt.Sprintf("$%d", index)
+		return "$1"
 	}
 	return "?"
 }
